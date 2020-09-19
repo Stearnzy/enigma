@@ -26,11 +26,13 @@ class EncryptTest < Minitest::Test
   def test_square_date
     encrypt = Encrypt.new
     encrypt.stubs(:date_conversion).returns("091820")
-    assert_equal 8430912400, encrypt.square_date
+    assert_equal "8430912400", encrypt.square_date
   end
 
-  def test_date_offset_generator
-    skip
+  def test_offset_generator
     encrypt = Encrypt.new
+    encrypt.stubs(:date_conversion).returns("091820")
+    expected = {A: 2, B: 4, C: 0, D: 0}
+    assert_equal expected, encrypt.offset_generator
   end
 end
