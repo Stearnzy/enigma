@@ -1,4 +1,8 @@
+require './lib/dateable'
+
 class Encrypt
+
+  include Dateable
   def initialize
 
   end
@@ -14,4 +18,6 @@ class Encrypt
     letter_keys = [:A, :B, :C, :D]
     encryption_keys = Hash[letter_keys.zip(placements)]
   end
+
+
 end
