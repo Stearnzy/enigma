@@ -45,5 +45,19 @@ class DecryptorTest < Minitest::Test
     assert_equal expected, decryptor.split_string("keder ohulw")
   end
 
-  
+  def test_match_letter_to_shift
+    decryptor = Decryptor.new
+    string = "keder ohulw"
+    decryptor.stubs(:random_number_generator).returns("02715")
+    decryptor.stubs(:date_conversion).returns("040895")
+
+    expected_1 = {A: 3, B: 27, C: 73, D:20}
+    require "pry"; binding.pry
+    assert_equal expected_1, decryptor.master_shift_count
+
+    expected_2 = x
+    assert_equal expected_2, decryptor.match_letter_to_shifts(string)
+  end
+
+
 end
