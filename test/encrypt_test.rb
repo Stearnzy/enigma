@@ -58,7 +58,23 @@ end
     assert_equal expected, encrypt.split_string(string)
   end
 
+  def test_match_letter_to_shift
+    encrypt = Encrypt.new
+    string = "Move Along"
+    encrypt.stubs(:random_number_generator).returns("02385")
+    encrypt.stubs(:date_conversion).returns("091820")
+
+    expected_1 = {A: 4, B: 27, C: 38, D:85}
+    assert_equal expected_1, encrypt.master_shift_count
+
+    expected_2 = [["m", [:A, 4]], ["o", [:B, 27]], ["v", [:C, 38]], ["e", [:D, 85]],
+                [" ", [:A, 4]], ["a", [:B, 27]], ["l", [:C, 38]], ["o", [:D, 85]],
+                ["n", [:A, 4]], ["g", [:B, 27]]]
+    assert_equal expected_2, encrypt.match_letter_to_shifts(string)
+  end
+
   def test_string_encryption
+    skip
     encrypt = Encrypt.new
     encrypt.stubs(:random_number_generator).returns("02385")
     encrypt.stubs(:date_conversion).returns("091820")
