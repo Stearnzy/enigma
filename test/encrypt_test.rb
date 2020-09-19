@@ -74,16 +74,18 @@ end
   end
 
   def test_total_shifts_per_character
-    skip
+
     encrypt = Encrypt.new
     string = "Move Along!!"
 
     encrypt.stubs(:random_number_generator).returns("02385")
     encrypt.stubs(:date_conversion).returns("091820")
+
     expected_1 = {A: 4, B: 27, C: 38, D:85}
     assert_equal expected_1, encrypt.master_shift_count
 
-    require "pry"; binding.pry
+    expected_2 = [16, 41, 59, 89, 30, 27, 49, 99, 17, 33, "!", "!"]
+    assert_equal expected_2, encrypt.shifts_per_character(string)
   end
 
   def test_string_encryption
