@@ -13,8 +13,7 @@ class Decryptor < Cryptograph
     string.downcase.split("").each_slice(4).to_a
   end
 
-  def key_generator
-    rand_num = random_number_generator
+  def key_generator(rand_num = random_number_generator)
     placements = [rand_num[0..1], rand_num[1..2], rand_num[2..3], rand_num[3..4]]
     placements.map! {|placement| placement.to_i}
     encryption_keys = Hash[@letter_keys.zip(placements)]
@@ -30,5 +29,12 @@ class Decryptor < Cryptograph
     master = key_generator.merge(offset_generator) do |letter, key, offset|
       key + offset
     end
+  end
+
+  def offset_generator
+    last_four_date_squared = square_date[-4..-1]
+    split_last_four = (last_four_date_squared.split(""))
+    split_last_four.map! {|placement| placement.to_i}
+    offset_values = Hash[@letter_keys.zip(split_last_four)]
   end
 end
