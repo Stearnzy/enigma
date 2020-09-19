@@ -1,6 +1,8 @@
 require 'date'
 require './lib/dateable'
 
+
+# Still need to give it output method, hash of encryption, key, date
 # Create superclass for @letter_keys, alphabet
 class Encrypt
   attr_reader :alphabet
