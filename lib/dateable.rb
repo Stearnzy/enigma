@@ -5,6 +5,6 @@ module Dateable
   end
 
   def square_date
-    date_conversion.to_i ** 2
+    (date_conversion.to_i ** 2).to_s
   end
 end
