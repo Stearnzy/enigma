@@ -49,4 +49,15 @@ end
     expected = {A: 4, B: 27, C: 38, D:85}
     assert_equal expected, encrypt.master_shift_count
   end
+
+  def test_string_encryption
+    encrypt = Encrypt.new
+    encrypt.stubs(:random_number_generator).returns("02385")
+    encrypt.stubs(:date_conversion).returns("091820")
+    expected_1 = {A: 4, B: 27, C: 38, D:85}
+    assert_equal expected_1, encrypt.master_shift_count
+
+    assert_equal "lewps gsvlo", encrypt.encrypt("hello world")
+    assert_equal "lenomnkgsowdhuoi!!!", encrypt.encrypt("Heckin Cool DUDE!!!")
+  end
 end
