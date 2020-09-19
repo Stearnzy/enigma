@@ -1,11 +1,16 @@
 require 'date'
 require './lib/dateable'
 
+
+# Create superclass for @letter_keys, alphabet
 class Encrypt
+  attr_reader :alphabet
 
   include Dateable
+
   def initialize
     @letter_keys = [:A, :B, :C, :D]
+    @alphabet = ("a".."z").to_a << ' '
   end
 
   def random_number_generator
