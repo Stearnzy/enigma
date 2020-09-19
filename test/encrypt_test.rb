@@ -9,17 +9,34 @@ class EncryptTest < Minitest::Test
     assert_instance_of Encrypt, encrypt
   end
 
-def test_readable_alphabet
-  encrypt = Encrypt.new
-  expected = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
-    "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]
-  assert_equal expected, encrypt.alphabet
-end
+  def test_readable_alphabet
+    encrypt = Encrypt.new
+    expected = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
+      "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]
+    assert_equal expected, encrypt.alphabet
+  end
 
   def test_random_number_generator
     encrypt = Encrypt.new
     encrypt.stubs(:random_number_generator).returns("02385")
     assert_equal "02385", encrypt.random_number_generator
+  end
+
+  def test_random_number_always_returns_5_digits
+    encrypt = Encrypt.new
+    pass = 0
+    fail = 0
+    2000.times do
+      s = encrypt.random_number_generator
+      if s.length == 5
+        pass += 1
+      else
+        fail += 1
+      end
+    end
+
+    assert_equal 0, fail
+    assert_equal 2000, pass
   end
 
   def test_key_generator
