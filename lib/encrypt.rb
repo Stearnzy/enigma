@@ -56,4 +56,17 @@ class Encrypt
       end
     end
   end
+
+
+  def encrypt(string, key = random_number_generator, date = date_conversion)
+    shifts_per_character(string).map do |index|
+      if index.is_a?(String)
+        index
+      elsif index > 27
+        @alphabet[index % 27]
+      else
+        @alphabet[index]
+      end
+    end.join
+  end
 end
