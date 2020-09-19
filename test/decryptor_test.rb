@@ -52,10 +52,11 @@ class DecryptorTest < Minitest::Test
     decryptor.stubs(:date_conversion).returns("040895")
 
     expected_1 = {A: 3, B: 27, C: 73, D:20}
-    require "pry"; binding.pry
     assert_equal expected_1, decryptor.master_shift_count
 
-    expected_2 = x
+    expected_2 = [["k", [:A, 3]], ["e", [:B, 27]], ["d", [:C, 73]], ["e", [:D, 20]],
+                ["r", [:A, 3]], [" ", [:B, 27]], ["o", [:C, 73]], ["h", [:D, 20]],
+                ["u", [:A, 3]], ["l", [:B, 27]], ["w", [:C, 73]]]
     assert_equal expected_2, decryptor.match_letter_to_shifts(string)
   end
 
