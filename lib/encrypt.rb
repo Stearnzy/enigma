@@ -1,18 +1,11 @@
 require 'date'
+require './lib/cryptograph'
 require './lib/dateable'
 
 
 # Still need to give it output method, hash of encryption, key, date
-# Create superclass for @letter_keys, alphabet
-class Encrypt
-  attr_reader :alphabet
-
+class Encrypt < Cryptograph
   include Dateable
-
-  def initialize
-    @letter_keys = [:A, :B, :C, :D]
-    @alphabet = ("a".."z").to_a << ' '
-  end
 
   def random_number_generator
     rand.to_s[2..6]
