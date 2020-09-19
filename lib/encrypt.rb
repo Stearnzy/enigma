@@ -2,7 +2,7 @@ require 'date'
 require './lib/cryptograph'
 require './lib/dateable'
 
-
+# May be able to remove require date..?
 # Still need to give it output method, hash of encryption, key, date
 class Encrypt < Cryptograph
   include Dateable
