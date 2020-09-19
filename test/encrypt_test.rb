@@ -74,7 +74,6 @@ end
   end
 
   def test_total_shifts_per_character
-
     encrypt = Encrypt.new
     string = "Move Along!!"
 
@@ -89,7 +88,6 @@ end
   end
 
   def test_string_encryption
-    skip
     encrypt = Encrypt.new
     encrypt.stubs(:random_number_generator).returns("02385")
     encrypt.stubs(:date_conversion).returns("091820")
