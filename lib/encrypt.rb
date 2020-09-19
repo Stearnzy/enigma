@@ -1,7 +1,6 @@
 require 'date'
 require './lib/dateable'
 
-
 # Create superclass for @letter_keys, alphabet
 class Encrypt
   attr_reader :alphabet
@@ -56,7 +55,6 @@ class Encrypt
       end
     end
   end
-
 
   def encrypt(string, key = random_number_generator, date = date_conversion)
     shifts_per_character(string).map do |index|
