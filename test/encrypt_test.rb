@@ -20,7 +20,7 @@ class EncryptTest < Minitest::Test
     encrypt = Encrypt.new
     encrypt.stubs(:random_number_generator).returns("02385")
     expected = {A: 2, B: 23, C: 38, D: 85}
-    assert_equal expected, encrypt.generate_keys
+    assert_equal expected, encrypt.key_generator
   end
 
   def test_square_date
@@ -34,5 +34,13 @@ class EncryptTest < Minitest::Test
     encrypt.stubs(:date_conversion).returns("091820")
     expected = {A: 2, B: 4, C: 0, D: 0}
     assert_equal expected, encrypt.offset_generator
+  end
+
+  def test_master_shift_count
+    encrypt = Encrypt.new
+    encrypt.stubs(:random_number_generator).returns("02385")
+    encrypt.stubs(:date_conversion).returns("091820")
+    expected = {A: 4, B: 27, C: 38, D:85}
+    assert_equal expected, encrypt.master_shift_count
   end
 end
