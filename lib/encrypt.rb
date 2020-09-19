@@ -36,4 +36,8 @@ class Encrypt
       key + offset
     end
   end
+
+  def split_string(string)
+    string.downcase.split("").each_slice(4).to_a
+  end
 end
