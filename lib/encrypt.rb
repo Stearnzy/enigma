@@ -31,6 +31,7 @@ class Encrypt < Cryptograph
     end
   end
 
+# Used in both encrypt and decrypt
   def split_string(string)
     string.downcase.split("").each_slice(4).to_a
   end
