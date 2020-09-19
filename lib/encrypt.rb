@@ -40,4 +40,10 @@ class Encrypt
   def split_string(string)
     string.downcase.split("").each_slice(4).to_a
   end
+
+  def match_letter_to_shifts(string)
+    split_string(string).map do |set_of_four_chars|
+      set_of_four_chars.zip(master_shift_count)
+    end.flatten(1)
+  end
 end
