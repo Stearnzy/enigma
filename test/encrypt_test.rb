@@ -17,9 +17,9 @@ class EncryptTest < Minitest::Test
   end
 
   def test_key_generator
-    skip
     encrypt = Encrypt.new
-    encrypt.generate_keys
-
+    encrypt.stubs(:random_number_generator).returns("02385")
+    expected = {A: 2, B: 23, C: 38, D: 85}
+    assert_equal expected, encrypt.generate_keys
   end
 end
