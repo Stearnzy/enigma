@@ -50,6 +50,14 @@ end
     assert_equal expected, encrypt.master_shift_count
   end
 
+  def test_split_string
+    encrypt = Encrypt.new
+    string = "Get Moving BROTHER"
+    expected = [["g", "e", "t", " "], ["m", "o", "v", "i"], ["n", "g", " ", "b"],
+                ["r", "o", "t", "h"], ["e", "r"]]
+    assert_equal expected, encrypt.split_string(string)
+  end
+
   def test_string_encryption
     encrypt = Encrypt.new
     encrypt.stubs(:random_number_generator).returns("02385")
