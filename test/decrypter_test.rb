@@ -16,58 +16,54 @@ class DecrypterTest < Minitest::Test
     assert_equal expected, decrypter.alphabet
   end
 
-  # def test_random_number_generator
-  #   decrypter = Decrypter.new
-  #   decrypter.stubs(:random_number_generator).returns("02715")
-  #   assert_equal "02715", decrypter.random_number_generator
-  # end
-  #
-  # def test_random_number_always_returns_5_digits
-  #   decrypter = Decrypter.new
-  #   pass = 0
-  #   fail = 0
-  #   2000.times do
-  #     s = decrypter.random_number_generator
-  #     if s.length == 5
-  #       pass += 1
-  #     else
-  #       fail += 1
-  #     end
-  #   end
-  #
-  #   assert_equal 0, fail
-  #   assert_equal 2000, pass
-  # end
-
-  def test_split_string
+  def test_shift_values_start_at_nil
     decrypter = Decrypter.new
-    expected = [["k", "e", "d", "e"], ["r", " ", "o", "h"], ["u", "l", "w"]]
-    assert_equal expected, decrypter.split_string("keder ohulw")
-  end
-
-  def test_offset_generator
-    decrypter = Decrypter.new
-    date = "040895"
-    expected = {A: 1, B: 0, C: 2, D: 5}
-    assert_equal expected, decrypter.offset_generator(date)
+    assert_nil decrypter.master_shift
+    assert_nil decrypter.key_shift
+    assert_nil decrypter.offset_shift
   end
 
   def test_key_generator
     decrypter = Decrypter.new
-    key = "02715"
-    expected = {:A=>2, :B=>27, :C=>71, :D=>15}
-    assert_equal expected, decrypter.key_set_generator(key)
+    key = ("02715")
+
+    expected_1 = {A: 2, B: 27, C: 71, D: 15}
+    assert_equal expected_1, decrypter.key_generator
+
+    expected_2 = {A: 6, B: 65, C: 59, D: 98}
+    assert_equal expected_2, decrypter.key_generator("06598")
   end
 
-  def test_master_shift_count
+  def test_square_date
+    decrypter = Decrypter.new
+    assert_equal "1672401025", decrypter.square_date("040895")
+
+    assert_equal "8449286400", decrypter.square_date("091920")
+  end
+
+  def test_generate_master_offset
     decrypter = Decrypter.new
     key = "02715"
     date = "040895"
 
+    decrypter.key_generator
+    assert_equal ({A: 2, B: 27, C: 71, D: 15}), decrypter.key_shift
+
+    decrypter.offset_generator(date)
+    assert_equal ({A: 1, B: 0, C: 2, D: 5}), decrypter.offset_shift
+
     expected = {A: 3, B: 27, C: 73, D:20}
-    actual = decrypter.master_shift_count(decrypter.key_set_generator(key),
-              decrypter.offset_generator(date))
+    actual = decrypter.generate_master_offset
+
     assert_equal expected, actual
+  end
+
+  def test_split_string
+    decrypter = Decrypter.new
+    message = "keder ohulw"
+
+    expected = [["k", "e", "d", "e"], ["r", " ", "o", "h"], ["u", "l", "w"]]
+    assert_equal expected, decrypter.split_string(string)
   end
 
   def test_match_letter_to_shift
@@ -76,28 +72,37 @@ class DecrypterTest < Minitest::Test
     key = "02715"
     date = "040895"
 
-    expected_1 = {A: 3, B: 27, C: 73, D:20}
-    actual = decrypter.master_shift_count(decrypter.key_set_generator(key),
-              decrypter.offset_generator(date))
-    assert_equal expected_1, actual
+    decrypter.key_generator(key)
+    decrypter.offset_generator(date)
+    assert_equal ({A: 3, B: 27, C: 73, D:20}), decrypter.generate_master_offset
 
-    expected_2 = [["k", [:A, 3]], ["e", [:B, 27]], ["d", [:C, 73]], ["e", [:D, 20]],
+    expected = [["k", [:A, 3]], ["e", [:B, 27]], ["d", [:C, 73]], ["e", [:D, 20]],
                 ["r", [:A, 3]], [" ", [:B, 27]], ["o", [:C, 73]], ["h", [:D, 20]],
                 ["u", [:A, 3]], ["l", [:B, 27]], ["w", [:C, 73]]]
     actual = decrypter.match_letter_to_shifts(message)
-    assert_equal expected_2, actual
+    assert_equal expected, actual
   end
 
-# This method is what's wrong!!  need to change index shifts
   def test_total_shifts_per_character
     decrypter = Decrypter.new
     message = "keder ohulw"
     key = "02715"
     date = "040895"
-    decrypter.master_shift_count(decrypter.key_set_generator(key), decrypter.offset_generator(date))
 
-    expected = [13, 31, 76, 24, 20, 53, 87, 27, 23, 38, 95]
-    decrypter.index_shifts_per_character(message)
+    decrypter.key_generator(key)
+    decrypter.offset_generator(date)
+    assert_equal ({A: 3, B: 27, C: 73, D:20}), decrypter.generate_master_offset
+
+    expected_1 = [["k", [:A, 3]], ["e", [:B, 27]], ["d", [:C, 73]], ["e", [:D, 20]],
+                ["r", [:A, 3]], [" ", [:B, 27]], ["o", [:C, 73]], ["h", [:D, 20]],
+                ["u", [:A, 3]], ["l", [:B, 27]], ["w", [:C, 73]]]
+    actual_1 = decrypter.match_letter_to_shifts(message)
+
+    assert_equal expected_1, actual_1
+
+# Be cautious, this is the result needed
+    expected_2 = [7, 4, 11, 11, 14, 26, 22, 14, 17, 11, 3]
+    assert_equal expected_2, decrypter.index_shifts_per_character(message)
   end
 
 # Index shifts needs to change to pass. ^^
