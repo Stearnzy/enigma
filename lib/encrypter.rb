@@ -14,19 +14,19 @@ class Encrypter < Cryptograph
   def key_generator(key = random_number_generator)
     placements = [key[0..1], key[1..2], key[2..3], key[3..4]]
     placements.map! {|placement| placement.to_i}
-    encryption_keys = Hash[@letter_keys.zip(placements)]
+    @key_shift = Hash[@letter_keys.zip(placements)]
   end
 
-  def offset_generator
-    last_four_date_squared = square_date[-4..-1]
+  def offset_generator(date)
+    last_four_date_squared = square_date(date)[-4..-1]
     split_last_four = (last_four_date_squared.split(""))
     split_last_four.map! {|placement| placement.to_i}
-    offset_values = Hash[@letter_keys.zip(split_last_four)]
+    @offset_shift = Hash[@letter_keys.zip(split_last_four)]
   end
 
-  def master_shift_count
-    key_generator.merge(offset_generator) do |letter, key, offset|
-      key + offset
+  def master_shift_count(keyset, offset)
+    @master_shift = @key_shift.merge(@offset_shift) do |letter, k, o|
+      k + o
     end
   end
 
@@ -37,10 +37,11 @@ class Encrypter < Cryptograph
 
   def match_letter_to_shifts(string)
     split_string(string).map do |set_of_four_chars|
-      set_of_four_chars.zip(master_shift_count)
+      set_of_four_chars.zip(@master_shift)
     end.flatten(1)
   end
 
+# This method will be different in decrypter
   def index_shifts_per_character(string)
     match_letter_to_shifts(string).map do |letter_shift|
       if @alphabet.include?(letter_shift[0])
