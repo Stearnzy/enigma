@@ -24,19 +24,14 @@ class DecrypterTest < Minitest::Test
   end
 
   def test_key_generator
-    skip
     decrypter = Decrypter.new
     key = ("02715")
 
-    expected_1 = {A: 2, B: 27, C: 71, D: 15}
-    assert_equal expected_1, decrypter.key_generator
-
-    expected_2 = {A: 6, B: 65, C: 59, D: 98}
-    assert_equal expected_2, decrypter.key_generator("06598")
+    expected = {A: 2, B: 27, C: 71, D: 15}
+    assert_equal expected, decrypter.key_generator(key)
   end
 
   def test_square_date
-    skip
     decrypter = Decrypter.new
     assert_equal "1672401025", decrypter.square_date("040895")
 
@@ -44,12 +39,11 @@ class DecrypterTest < Minitest::Test
   end
 
   def test_generate_master_offset
-    skip
     decrypter = Decrypter.new
     key = "02715"
     date = "040895"
 
-    decrypter.key_generator
+    decrypter.key_generator(key)
     assert_equal ({A: 2, B: 27, C: 71, D: 15}), decrypter.key_shift
 
     decrypter.offset_generator(date)
@@ -62,16 +56,14 @@ class DecrypterTest < Minitest::Test
   end
 
   def test_split_string
-    skip
     decrypter = Decrypter.new
     message = "keder ohulw"
 
     expected = [["k", "e", "d", "e"], ["r", " ", "o", "h"], ["u", "l", "w"]]
-    assert_equal expected, decrypter.split_string(string)
+    assert_equal expected, decrypter.split_string(message)
   end
 
   def test_match_letter_to_shift
-    skip
     decrypter = Decrypter.new
     message = "keder ohulw"
     key = "02715"
@@ -89,7 +81,6 @@ class DecrypterTest < Minitest::Test
   end
 
   def test_total_shifts_per_character
-    skip
     decrypter = Decrypter.new
     message = "keder ohulw"
     key = "02715"
