@@ -25,7 +25,7 @@ class Encrypter < Cryptograph
   end
 
   def master_shift_count
-    master = key_generator.merge(offset_generator) do |letter, key, offset|
+    key_generator.merge(offset_generator) do |letter, key, offset|
       key + offset
     end
   end
@@ -51,6 +51,7 @@ class Encrypter < Cryptograph
     end
   end
 
+# key_generator not called in below method... Likely need reworking
   def encrypt(string, key = random_number_generator, date = date_conversion)
     shifts_per_character(string).map do |index|
       if index.is_a?(String)

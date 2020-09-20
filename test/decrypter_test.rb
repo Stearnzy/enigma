@@ -47,9 +47,8 @@ class DecrypterTest < Minitest::Test
 
   def test_offset_generator
     decrypter = Decrypter.new
-    decrypter.stubs(:date_conversion).returns("040895")
     expected = {A: 1, B: 0, C: 2, D: 5}
-    assert_equal expected, decrypter.offset_generator
+    assert_equal expected, decrypter.offset_generator("040895")
   end
 
   def test_key_generator
@@ -57,7 +56,22 @@ class DecrypterTest < Minitest::Test
     key = "02715"
 
     expected = {:A=>2, :B=>27, :C=>71, :D=>15}
-    assert_equal expected, decrypter.key_generator("02715")
+    assert_equal expected, decrypter.key_set_generator(key)
+  end
+
+  def test_master_shift_count
+    skip
+    decrypter = Decrypter.new
+    # require "pry"; binding.pry
+    expected_1 = {A: 1, B: 0, C: 2, D: 5}
+    assert_equal expected_1, decrypter.offset_generator("040895")
+
+    key = "02715"
+    expected_2 = {:A=>2, :B=>27, :C=>71, :D=>15}
+    assert_equal expected_2, decrypter.key_set_generator(key)
+
+    expected_3 = {A: 3, B: 27, C: 73, D:20}
+    assert_equal expected_3, decrypter.master_shift_count
   end
 
   def test_match_letter_to_shift
