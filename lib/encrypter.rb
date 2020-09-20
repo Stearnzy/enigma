@@ -24,7 +24,7 @@ class Encrypter < Cryptograph
     @offset_shift = Hash[@letter_keys.zip(split_last_four)]
   end
 
-  def master_shift_count(keyset, offset)
+  def generate_master_offset
     @master_shift = @key_shift.merge(@offset_shift) do |letter, k, o|
       k + o
     end
@@ -52,8 +52,11 @@ class Encrypter < Cryptograph
     end
   end
 
-# key_generator not called in below method... Likely need reworking
   def encrypt(string, key = random_number_generator, date = date_conversion)
+    key_generator(key)
+    offset_generator(date)
+    generate_master_offset
+    require "pry"; binding.pry
     index_shifts_per_character(string).map do |index|
       if index.is_a?(String)
         index
@@ -64,4 +67,19 @@ class Encrypter < Cryptograph
       end
     end.join
   end
+
+
+# key_generator not called in below method... Likely need reworking
+  # def encrypt(string, key = random_number_generator, date = date_conversion)
+  #   index_shifts_per_character(string).map do |index|
+  #     if index.is_a?(String)
+  #       index
+  #     elsif index > 27
+  #       @alphabet[index % 27]
+  #     else
+  #       @alphabet[index]
+  #     end
+  #   end.join
+  # end
+
 end
