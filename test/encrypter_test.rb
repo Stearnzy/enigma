@@ -16,6 +16,13 @@ class EncrypterTest < Minitest::Test
     assert_equal expected, encrypter.alphabet
   end
 
+  def test_shift_values_start_at_nil
+    encrypter = Encrypter.new
+    assert_nil encrypter.master_shift
+    assert_nil encrypter.key_shift
+    assert_nil encrypter.offset_shift
+  end
+
   def test_random_number_generator
     encrypter = Encrypter.new
     encrypter.stubs(:random_number_generator).returns("02715")
@@ -42,29 +49,46 @@ class EncrypterTest < Minitest::Test
   def test_key_generator
     encrypter = Encrypter.new
     encrypter.stubs(:random_number_generator).returns("02715")
-    expected = {A: 2, B: 27, C: 71, D: 15}
-    assert_equal expected, encrypter.key_generator
+
+    expected_1 = {A: 2, B: 27, C: 71, D: 15}
+    assert_equal expected_1, encrypter.key_generator
+
+    expected_2 = {A: 6, B: 65, C: 59, D: 98}
+    assert_equal expected_2, encrypter.key_generator("06598")
   end
 
   def test_square_date
     encrypter = Encrypter.new
-    encrypter.stubs(:date_conversion).returns("040895")
-    assert_equal "1672401025", encrypter.square_date
+    assert_equal "1672401025", encrypter.square_date("040895")
+
+    assert_equal "8449286400", encrypter.square_date("091920")
   end
 
   def test_offset_generator
     encrypter = Encrypter.new
-    encrypter.stubs(:date_conversion).returns("040895")
-    expected = {A: 1, B: 0, C: 2, D: 5}
-    assert_equal expected, encrypter.offset_generator
+    date_1 = "040895"
+    expected_1 = {A: 1, B: 0, C: 2, D: 5}
+    assert_equal expected_1, encrypter.offset_generator(date_1)
+
+    date_2 = "091920"
+    expected_2 = {A: 6, B: 4, C: 0, D: 0}
   end
 
   def test_master_shift_count
     encrypter = Encrypter.new
     encrypter.stubs(:random_number_generator).returns("02715")
-    encrypter.stubs(:date_conversion).returns("040895")
+    date = "040895"
+
+    encrypter.key_generator
+    assert_equal ({A: 2, B: 27, C: 71, D: 15}), encrypter.key_shift
+
+    encrypter.offset_generator(date)
+    assert_equal ({A: 1, B: 0, C: 2, D: 5}), encrypter.offset_shift
+
     expected = {A: 3, B: 27, C: 73, D:20}
-    assert_equal expected, encrypter.master_shift_count
+    actual = encrypter.master_shift_count(encrypter.key_shift, encrypter.offset_shift)
+
+    assert_equal expected, actual
   end
 
   def test_split_string
@@ -77,11 +101,16 @@ class EncrypterTest < Minitest::Test
   def test_match_letter_to_shift
     encrypter = Encrypter.new
     string = "Hello World!!"
+
     encrypter.stubs(:random_number_generator).returns("02715")
-    encrypter.stubs(:date_conversion).returns("040895")
+    encrypter.key_generator
+
+    date = "040895"
+    encrypter.offset_generator(date)
 
     expected_1 = {A: 3, B: 27, C: 73, D:20}
-    assert_equal expected_1, encrypter.master_shift_count
+    actual_1 = encrypter.master_shift_count(encrypter.key_shift, encrypter.offset_shift)
+    assert_equal expected_1, actual_1
 
     expected_2 = [["h", [:A, 3]], ["e", [:B, 27]], ["l", [:C, 73]], ["l", [:D, 20]],
                 ["o", [:A, 3]], [" ", [:B, 27]], ["w", [:C, 73]], ["o", [:D, 20]],
@@ -95,21 +124,26 @@ class EncrypterTest < Minitest::Test
     string = "Hello World!!"
 
     encrypter.stubs(:random_number_generator).returns("02715")
-    encrypter.stubs(:date_conversion).returns("040895")
+    encrypter.key_generator
 
-    expected_1 = {A: 3, B: 27, C: 73, D:20}
-    assert_equal expected_1, encrypter.master_shift_count
+    date = "040895"
+    encrypter.offset_generator(date)
 
-    expected_2 = [10, 31, 84, 31, 17, 53, 95, 34, 20, 38, 76, "!", "!"]
-    assert_equal expected_2, encrypter.shifts_per_character(string)
+    encrypter.master_shift_count(encrypter.key_shift, encrypter.offset_shift)
+
+    expected = [10, 31, 84, 31, 17, 53, 95, 34, 20, 38, 76, "!", "!"]
+    assert_equal expected, encrypter.index_shifts_per_character(string)
   end
 
   def test_string_encrypterion
     encrypter = Encrypter.new
     encrypter.stubs(:random_number_generator).returns("02715")
-    encrypter.stubs(:date_conversion).returns("040895")
-    expected_1 = {A: 3, B: 27, C: 73, D:20}
-    assert_equal expected_1, encrypter.master_shift_count
+    encrypter.key_generator
+
+    date = "040895"
+    encrypter.offset_generator(date)
+
+    encrypter.master_shift_count(encrypter.key_shift, encrypter.offset_shift)
 
     assert_equal "keder ohulw!!", encrypter.encrypt("Hello World!!")
     assert_equal "kevdlnswrodtguwy!!!", encrypter.encrypt("Heckin Cool DUDE!!!")
