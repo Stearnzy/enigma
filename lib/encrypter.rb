@@ -4,7 +4,7 @@ require './lib/dateable'
 
 # May be able to remove require date..?
 # Still need to give it output method, hash of encryption, key, date
-class Encrypt < Cryptograph
+class Encrypter < Cryptograph
   include Dateable
 
   def random_number_generator
