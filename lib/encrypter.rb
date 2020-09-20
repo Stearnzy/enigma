@@ -52,12 +52,8 @@ class Encrypter < Cryptograph
     end
   end
 
-  def encrypt(string, key = random_number_generator, date = date_conversion)
-    key_generator(key)
-    offset_generator(date)
-    generate_master_offset
-    require "pry"; binding.pry
-    index_shifts_per_character(string).map do |index|
+  def index_encryption_mapping(input)
+    input.map do |index|
       if index.is_a?(String)
         index
       elsif index > 27
@@ -68,18 +64,12 @@ class Encrypter < Cryptograph
     end.join
   end
 
-
-# key_generator not called in below method... Likely need reworking
-  # def encrypt(string, key = random_number_generator, date = date_conversion)
-  #   index_shifts_per_character(string).map do |index|
-  #     if index.is_a?(String)
-  #       index
-  #     elsif index > 27
-  #       @alphabet[index % 27]
-  #     else
-  #       @alphabet[index]
-  #     end
-  #   end.join
-  # end
-
+  def encrypt(string, key = random_number_generator, date = date_conversion)
+    key_generator(key)
+    offset_generator(date)
+    generate_master_offset
+    match_letter_to_shifts(string)
+    guide = index_shifts_per_character(string)
+    index_encryption_mapping(guide)
+  end
 end
