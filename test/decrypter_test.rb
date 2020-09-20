@@ -72,16 +72,19 @@ class DecrypterTest < Minitest::Test
 
   def test_match_letter_to_shift
     decrypter = Decrypter.new
-    string = "keder ohulw"
-    decrypter.stubs(:random_number_generator).returns("02715")
-    decrypter.stubs(:date_conversion).returns("040895")
+    message = "keder ohulw"
+    key = "02715"
+    date = "040895"
 
     expected_1 = {A: 3, B: 27, C: 73, D:20}
-    assert_equal expected_1, decrypter.master_shift_count
+    actual = decrypter.master_shift_count(decrypter.key_set_generator(key),
+              decrypter.offset_generator(date))
+    assert_equal expected_1, actual
 
     expected_2 = [["k", [:A, 3]], ["e", [:B, 27]], ["d", [:C, 73]], ["e", [:D, 20]],
                 ["r", [:A, 3]], [" ", [:B, 27]], ["o", [:C, 73]], ["h", [:D, 20]],
                 ["u", [:A, 3]], ["l", [:B, 27]], ["w", [:C, 73]]]
-    assert_equal expected_2, decrypter.match_letter_to_shifts(string)
+    actual = decrypter.match_letter_to_shifts(message)
+    assert_equal expected_2, actual
   end
 end
