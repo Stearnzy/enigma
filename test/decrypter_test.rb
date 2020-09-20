@@ -87,4 +87,13 @@ class DecrypterTest < Minitest::Test
     actual = decrypter.match_letter_to_shifts(message)
     assert_equal expected_2, actual
   end
+
+  def test_decrypt
+    decrypter = Decrypter.new
+    message = "keder ohulw"
+    key = "02715"
+    date = "040895"
+
+    assert_equal "hello world", decrypter.decrypt(message, key, date)
+  end
 end
