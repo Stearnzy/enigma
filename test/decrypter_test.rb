@@ -88,7 +88,19 @@ class DecrypterTest < Minitest::Test
     assert_equal expected_2, actual
   end
 
+  def test_total_shifts_per_character
+    decrypter = Decrypter.new
+    message = "keder ohulw"
+    key = "02715"
+    date = "040895"
+    decrypter.master_shift_count(decrypter.key_set_generator(key), decrypter.offset_generator(date))
+
+    expected = [13, 31, 76, 24, 20, 53, 87, 27, 23, 38, 95]
+    decrypter.index_shifts_per_character(message)
+  end
+
   def test_decrypt
+    skip
     decrypter = Decrypter.new
     message = "keder ohulw"
     key = "02715"
