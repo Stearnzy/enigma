@@ -43,6 +43,7 @@ class Decrypter < Cryptograph
     offset_values = Hash[@letter_keys.zip(split_last_four)]
   end
 
+# This method is what needs to change from + to -
   def index_shifts_per_character(string)
     match_letter_to_shifts(string).map do |letter_shift|
       if @alphabet.include?(letter_shift[0])
@@ -61,7 +62,14 @@ class Decrypter < Cryptograph
     offset_keys = offset_generator(date)
     master_shift_count(encryption_keys, offset_keys)
     match_letter_to_shifts(string)
-
-
+    index_shifts_per_character(string).map do |index|
+      if index.is_a?(String)
+        index
+      elsif index > 27
+        @alphabet[index % 27]
+      else
+        @alphabet[index]
+      end
+    end.join
   end
 end

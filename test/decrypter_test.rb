@@ -88,6 +88,7 @@ class DecrypterTest < Minitest::Test
     assert_equal expected_2, actual
   end
 
+# This method is what's wrong!!  need to change index shifts
   def test_total_shifts_per_character
     decrypter = Decrypter.new
     message = "keder ohulw"
@@ -99,6 +100,7 @@ class DecrypterTest < Minitest::Test
     decrypter.index_shifts_per_character(message)
   end
 
+# Index shifts needs to change to pass. ^^
   def test_decrypt
     decrypter = Decrypter.new
     message = "keder ohulw"
