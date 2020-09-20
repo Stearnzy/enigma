@@ -47,7 +47,7 @@ class Decrypter < Cryptograph
   def index_shifts_per_character(string)
     match_letter_to_shifts(string).map do |letter_shift|
       if @alphabet.include?(letter_shift[0])
-        @alphabet.index(letter_shift[0]) + letter_shift[1][1]
+        @alphabet.index(letter_shift[0]) - letter_shift[1][1]
       else
         letter_shift[0]
       end

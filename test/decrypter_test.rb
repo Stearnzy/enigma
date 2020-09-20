@@ -107,6 +107,8 @@ class DecrypterTest < Minitest::Test
     key = "02715"
     date = "040895"
 
+    require "pry"; binding.pry
+
     assert_equal "hello world", decrypter.decrypt(message, key, date)
   end
 end
