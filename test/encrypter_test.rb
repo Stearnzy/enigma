@@ -85,7 +85,7 @@ class EncrypterTest < Minitest::Test
     encrypter.offset_generator(date)
     assert_equal ({A: 1, B: 0, C: 2, D: 5}), encrypter.offset_shift
 
-    expected = {A: 3, B: 27, C: 73, D:20}
+    expected = {A: 3, B: 0, C: 19, D:20}
     actual = encrypter.generate_master_offset
 
     assert_equal expected, actual
@@ -108,13 +108,13 @@ class EncrypterTest < Minitest::Test
     date = "040895"
     encrypter.offset_generator(date)
 
-    expected_1 = {A: 3, B: 27, C: 73, D:20}
+    expected_1 = {A: 3, B: 0, C: 19, D:20}
     actual_1 = encrypter.generate_master_offset
     assert_equal expected_1, actual_1
 
-    expected_2 = [["h", [:A, 3]], ["e", [:B, 27]], ["l", [:C, 73]], ["l", [:D, 20]],
-                ["o", [:A, 3]], [" ", [:B, 27]], ["w", [:C, 73]], ["o", [:D, 20]],
-                ["r", [:A, 3]], ["l", [:B, 27]], ["d", [:C, 73]], ["!", [:D, 20]],
+    expected_2 = [["h", [:A, 3]], ["e", [:B, 0]], ["l", [:C, 19]], ["l", [:D, 20]],
+                ["o", [:A, 3]], [" ", [:B, 0]], ["w", [:C, 19]], ["o", [:D, 20]],
+                ["r", [:A, 3]], ["l", [:B, 0]], ["d", [:C, 19]], ["!", [:D, 20]],
                 ["!", [:A, 3]]]
     assert_equal expected_2, encrypter.match_letter_to_shifts(string)
   end
