@@ -41,7 +41,7 @@ class Encrypter < Cryptograph
     end.flatten(1)
   end
 
-  def shifts_per_character(string)
+  def index_shifts_per_character(string)
     match_letter_to_shifts(string).map do |letter_shift|
       if @alphabet.include?(letter_shift[0])
         @alphabet.index(letter_shift[0]) + letter_shift[1][1]
@@ -53,7 +53,7 @@ class Encrypter < Cryptograph
 
 # key_generator not called in below method... Likely need reworking
   def encrypt(string, key = random_number_generator, date = date_conversion)
-    shifts_per_character(string).map do |index|
+    index_shifts_per_character(string).map do |index|
       if index.is_a?(String)
         index
       elsif index > 27
