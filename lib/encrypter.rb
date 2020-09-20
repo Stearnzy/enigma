@@ -7,16 +7,19 @@ require './lib/dateable'
 class Encrypter < Cryptograph
   include Dateable
 
+# Only in Encrypter
   def random_number_generator
     rand.to_s[2..6]
   end
 
+# BOTH
   def key_generator(key = random_number_generator)
     placements = [key[0..1], key[1..2], key[2..3], key[3..4]]
     placements.map! {|placement| placement.to_i}
     @key_shift = Hash[@letter_keys.zip(placements)]
   end
 
+# BOTH
   def offset_generator(date)
     last_four_date_squared = square_date(date)[-4..-1]
     split_last_four = (last_four_date_squared.split(""))
@@ -24,17 +27,19 @@ class Encrypter < Cryptograph
     @offset_shift = Hash[@letter_keys.zip(split_last_four)]
   end
 
+# BOTH
   def generate_master_offset
-    @master_shift = @key_shift.merge(@offset_shift) do |letter, k, o|
-      k + o
+    @master_shift = @key_shift.merge(@offset_shift) do |letter, key, off|
+      key + off
     end
   end
 
-# Used in both encrypt and decrypt
+# BOTH
   def split_string(string)
     string.downcase.split("").each_slice(4).to_a
   end
 
+# BOTH
   def match_letter_to_shifts(string)
     split_string(string).map do |set_of_four_chars|
       set_of_four_chars.zip(@master_shift)
@@ -52,6 +57,7 @@ class Encrypter < Cryptograph
     end
   end
 
+# BOTH
   def index_encryption_mapping(input)
     input.map do |index|
       if index.is_a?(String)
