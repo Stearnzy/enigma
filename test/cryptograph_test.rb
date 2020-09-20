@@ -14,4 +14,11 @@ class CryptographTest < Minitest::Test
       "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]
     assert_equal expected, cryptograph.alphabet
   end
+
+  def test_all_shift_guides_start_nil
+    cryptograph = Cryptograph.new
+    assert_nil cryptograph.master_shift
+    assert_nil cryptograph.key_shift
+    assert_nil cryptograph.offset_shift
+  end
 end
