@@ -2,7 +2,7 @@ require 'date'
 require './lib/cryptograph'
 require './lib/dateable'
 
-class Decryptor < Cryptograph
+class Decrypter < Cryptograph
   include Dateable
 
   # def random_number_generator
@@ -25,12 +25,13 @@ class Decryptor < Cryptograph
     end.flatten(1)
   end
 
-  def master_shift_count
-    master = key_generator.merge(offset_generator) do |letter, key, offset|
-      key + offset
-    end
-  end
+  # def master_shift_count
+  #   master = key_generator.merge(offset_generator) do |letter, key, offset|
+  #     key + offset
+  #   end
+  # end
 
+# Necessary method, used in both encrypt, decrypt
   def offset_generator
     last_four_date_squared = square_date[-4..-1]
     split_last_four = (last_four_date_squared.split(""))
