@@ -46,7 +46,7 @@ class Encrypter < Cryptograph
     end.flatten(1)
   end
 
-# This method will be different in decrypter
+# DIFFERENT
   def index_shifts_per_character(string)
     match_letter_to_shifts(string).map do |letter_shift|
       if @alphabet.include?(letter_shift[0])
@@ -57,7 +57,7 @@ class Encrypter < Cryptograph
     end
   end
 
-# BOTH
+# ?????
   def index_encryption_mapping(input)
     input.map do |index|
       if index.is_a?(String)
