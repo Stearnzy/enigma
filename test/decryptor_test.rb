@@ -60,5 +60,10 @@ class DecryptorTest < Minitest::Test
     assert_equal expected_2, decryptor.match_letter_to_shifts(string)
   end
 
-
+  def test_offset_generator
+    decryptor = Decryptor.new
+    decryptor.stubs(:date_conversion).returns("040895")
+    expected = {A: 1, B: 0, C: 2, D: 5}
+    assert_equal expected, decryptor.offset_generator
+  end
 end
