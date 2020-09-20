@@ -38,6 +38,14 @@ class DecrypterTest < Minitest::Test
     assert_equal "8449286400", decrypter.square_date("091920")
   end
 
+  def test_offset_generator
+    decrypter = Decrypter.new
+    date = "040895"
+
+    decrypter.offset_generator(date)
+    assert_equal ({A: 1, B: 0, C: 2, D: 5}), decrypter.offset_shift
+  end
+
   def test_generate_master_offset
     decrypter = Decrypter.new
     key = "02715"
@@ -81,12 +89,16 @@ class DecrypterTest < Minitest::Test
   end
 
   def test_total_shifts_per_character
+    skip
     decrypter = Decrypter.new
     message = "keder ohulw"
-    key = "02715"
+    # key = "02715"
+    key =
     date = "040895"
 
     decrypter.key_generator(key)
+
+    require "pry"; binding.pry
     decrypter.offset_generator(date)
     assert_equal ({A: 3, B: 27, C: 73, D:20}), decrypter.generate_master_offset
 
