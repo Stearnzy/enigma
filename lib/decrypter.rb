@@ -16,7 +16,7 @@ class Decrypter < Cryptograph
 
 # Used in both encrypt decrypt
   def master_shift_count(keyset, offset)
-    keyset.merge(offset) do |letter, k, o|
+    @master_key_shift = keyset.merge(offset) do |letter, k, o|
       k + o
     end
   end
@@ -30,15 +30,9 @@ class Decrypter < Cryptograph
 
   def match_letter_to_shifts(string)
     split_string(string).map do |set_of_four_chars|
-      set_of_four_chars.zip(master_shift_count)
+      set_of_four_chars.zip(@master_key_shift)
     end.flatten(1)
   end
-
-  # def master_shift_count
-  #   master = key_generator.merge(offset_generator) do |letter, key, offset|
-  #     key + offset
-  #   end
-  # end
 
 # Necessary method, used in both encrypt, decrypt
 # THIS HAS BEEN ALTERED
@@ -54,5 +48,7 @@ class Decrypter < Cryptograph
   def decrypt(string, key, date = date_conversion)
     encryption_keys = key_set_generator(key)
     offset_keys = offset_generator(date)
+    master_shift_count(encryption_keys, offset_keys)
+    match_letter_to_shifts(string)
   end
 end
