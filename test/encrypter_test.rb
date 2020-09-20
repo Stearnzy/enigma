@@ -135,25 +135,9 @@ class EncrypterTest < Minitest::Test
     assert_equal expected, encrypter.index_shifts_per_character(string)
   end
 
-  # def test_string_encrypterion
-  #   encrypter = Encrypter.new
-  #   encrypter.stubs(:random_number_generator).returns("02715")
-  #   encrypter.key_generator
-  #
-  #   date = "040895"
-  #   encrypter.offset_generator(date)
-  #
-  #   encrypter.master_shift_count(encrypter.key_shift, encrypter.offset_shift)
-  #
-  #   assert_equal "keder ohulw!!", encrypter.encrypt("Hello World!!")
-  #   assert_equal "kevdlnswrodtguwy!!!", encrypter.encrypt("Heckin Cool DUDE!!!")
-  # end
-
   def test_encrypt
-    skip
     encrypter = Encrypter.new
-    require "pry"; binding.pry
-    # encrypter.stubs(:random_number_generator).returns("02715")
+    encrypter.stubs(:random_number_generator).returns("02715")
     encrypter.stubs(:date_conversion).returns("040895")
 
     assert_equal "keder ohulw!!", encrypter.encrypt("Hello World!!")
