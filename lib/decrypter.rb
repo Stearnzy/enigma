@@ -43,6 +43,17 @@ class Decrypter < Cryptograph
     offset_values = Hash[@letter_keys.zip(split_last_four)]
   end
 
+  def index_shifts_per_character(string)
+    match_letter_to_shifts(string).map do |letter_shift|
+      if @alphabet.include?(letter_shift[0])
+        @alphabet.index(letter_shift[0]) + letter_shift[1][1]
+      else
+        letter_shift[0]
+      end
+    end
+  end
+
+
 # Args setup correctly, I think!
 # Key MUST be called for the DECRYPT method?
   def decrypt(string, key, date = date_conversion)
@@ -50,5 +61,7 @@ class Decrypter < Cryptograph
     offset_keys = offset_generator(date)
     master_shift_count(encryption_keys, offset_keys)
     match_letter_to_shifts(string)
+
+
   end
 end
