@@ -17,7 +17,7 @@ class Decrypter < Cryptograph
 # Used in both encrypt decrypt
   def master_shift_count(keyset, offset)
     keyset.merge(offset) do |letter, k, o|
-      (k - o).abs
+      k + o
     end
   end
 
