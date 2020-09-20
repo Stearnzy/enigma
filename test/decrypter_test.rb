@@ -45,6 +45,21 @@ class DecrypterTest < Minitest::Test
     assert_equal expected, decrypter.split_string("keder ohulw")
   end
 
+  def test_offset_generator
+    decrypter = Decrypter.new
+    decrypter.stubs(:date_conversion).returns("040895")
+    expected = {A: 1, B: 0, C: 2, D: 5}
+    assert_equal expected, decrypter.offset_generator
+  end
+
+  def test_key_generator
+    decrypter = Decrypter.new
+    key = "02715"
+
+    expected = {:A=>2, :B=>27, :C=>71, :D=>15}
+    assert_equal expected, decrypter.key_generator("02715")
+  end
+
   def test_match_letter_to_shift
     skip
     decrypter = Decrypter.new
@@ -59,12 +74,5 @@ class DecrypterTest < Minitest::Test
                 ["r", [:A, 3]], [" ", [:B, 27]], ["o", [:C, 73]], ["h", [:D, 20]],
                 ["u", [:A, 3]], ["l", [:B, 27]], ["w", [:C, 73]]]
     assert_equal expected_2, decrypter.match_letter_to_shifts(string)
-  end
-
-  def test_offset_generator
-    decrypter = Decrypter.new
-    decrypter.stubs(:date_conversion).returns("040895")
-    expected = {A: 1, B: 0, C: 2, D: 5}
-    assert_equal expected, decrypter.offset_generator
   end
 end
