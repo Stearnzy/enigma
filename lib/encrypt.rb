@@ -11,8 +11,8 @@ class Encrypt < Cryptograph
     rand.to_s[2..6]
   end
 
-  def key_generator(rand_num = random_number_generator)
-    placements = [rand_num[0..1], rand_num[1..2], rand_num[2..3], rand_num[3..4]]
+  def key_generator(key = random_number_generator)
+    placements = [key[0..1], key[1..2], key[2..3], key[3..4]]
     placements.map! {|placement| placement.to_i}
     encryption_keys = Hash[@letter_keys.zip(placements)]
   end
