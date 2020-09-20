@@ -100,7 +100,6 @@ class DecrypterTest < Minitest::Test
   end
 
   def test_decrypt
-    skip
     decrypter = Decrypter.new
     message = "keder ohulw"
     key = "02715"
