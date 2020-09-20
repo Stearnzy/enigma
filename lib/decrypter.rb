@@ -22,8 +22,12 @@ class Decrypter < Cryptograph
 
 # BOTH
   def generate_master_offset
-    @master_key_shift = @key_shift.merge(@offset_shift) do |letter, key, off|
+    shifts_combined = @key_shift.merge(@offset_shift) do |letter, key, off|
       key + off
+    end
+    @master_shift = shifts_combined.reduce({}) do |collector, (key, count)|
+      collector[key] = count % 27
+      collector
     end
   end
 
@@ -35,19 +39,31 @@ class Decrypter < Cryptograph
 # BOTH
   def match_letter_to_shifts(string)
     split_string(string).map do |set_of_four_chars|
-      set_of_four_chars.zip(@master_key_shift)
+      set_of_four_chars.zip(@master_shift)
     end.flatten(1)
   end
 
 # DIFFERENT
   def index_shifts_per_character(string)
-    match_letter_to_shifts(string).map do |letter_shift|
-      if @alphabet.include?(letter_shift[0])
-        @alphabet.index(letter_shift[0]) - letter_shift[1][1]
-      else
-        letter_shift[0]
+    reduced_shifts = match_letter_to_shifts(string).each do |letter, shift|
+      shift.map do |letter_key, shift_count|
+        if shift_count > 27
+          shift_count = shift_count % 27
+        else
+          shift_count
+        end
       end
     end
+
+
+    # reduced_shifts.map do |shift_count|
+    #   strin
+      # if @alphabet.include?(letter_shift[0])
+      #   @alphabet.index(letter_shift[0]) - letter_shift[1][1]
+      # else
+      #   letter_shift[0]
+      # end
+    # end
   end
 
 
