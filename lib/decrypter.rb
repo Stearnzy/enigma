@@ -41,25 +41,14 @@ class Decrypter < Cryptograph
 
 # DIFFERENT
   def index_shifts_per_character(string)
-    reduced_shifts = match_letter_to_shifts(string).each do |letter, shift|
-      shift.map do |letter_key, shift_count|
-        if shift_count > 27
-          shift_count = shift_count % 27
-        else
-          shift_count
-        end
+    compiled = match_letter_to_shifts(string).map do |letter_shift|
+      if @alphabet.include?(letter_shift[0])
+        @alphabet.index(letter_shift[0]) - letter_shift[1][1]
+      else
+        letter_shift[0]
       end
     end
-
-
-    # reduced_shifts.map do |shift_count|
-    #   strin
-      # if @alphabet.include?(letter_shift[0])
-      #   @alphabet.index(letter_shift[0]) - letter_shift[1][1]
-      # else
-      #   letter_shift[0]
-      # end
-    # end
+    compiled
   end
 
 
