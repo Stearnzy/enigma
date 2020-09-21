@@ -28,4 +28,21 @@ class EnigmaTest < Minitest::Test
     enigma.stubs(:random_number_generator).returns("02715")
     assert_equal "02715", enigma.random_number_generator
   end
+
+  def test_random_number_always_returns_5_digits
+    engima = Enigma.new
+    pass = 0
+    fail = 0
+    2000.times do
+      s = engima.random_number_generator
+      if s.length == 5
+        pass += 1
+      else
+        fail += 1
+      end
+    end
+
+    assert_equal 0, fail
+    assert_equal 2000, pass
+  end
 end
