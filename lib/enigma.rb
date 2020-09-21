@@ -24,9 +24,4 @@ class Enigma < Cryptograph
     guide = decrypt_index_shifts_per_character(string)
     index_mapping(guide)
   end
-
-
-  def random_number_generator
-    rand.to_s[2..6]
-  end
 end
