@@ -105,4 +105,24 @@ class EnigmaTest < Minitest::Test
     assert_equal expected_2, enigma.split_string(string_2)
   end
 
+  def test_match_letter_to_shift
+    enigma = Enigma.new
+    string = "Hello World!!"
+
+    enigma.stubs(:random_number_generator).returns("02715")
+    enigma.key_generator
+
+    date = "040895"
+    enigma.offset_generator(date)
+
+    expected_1 = {A: 3, B: 27, C: 73, D:20}
+    actual_1 = enigma.generate_master_offset
+    assert_equal expected_1, actual_1
+
+    expected_2 = [["h", [:A, 3]], ["e", [:B, 27]], ["l", [:C, 73]], ["l", [:D, 20]],
+                ["o", [:A, 3]], [" ", [:B, 27]], ["w", [:C, 73]], ["o", [:D, 20]],
+                ["r", [:A, 3]], ["l", [:B, 27]], ["d", [:C, 73]], ["!", [:D, 20]],
+                ["!", [:A, 3]]]
+    assert_equal expected_2, enigma.match_letter_to_shifts(string)
+  end
 end
