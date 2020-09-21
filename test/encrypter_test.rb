@@ -131,7 +131,7 @@ class EncrypterTest < Minitest::Test
     encrypter.generate_master_offset
 
     expected = [10, 31, 84, 31, 17, 53, 95, 34, 20, 38, 76, "!", "!"]
-    assert_equal expected, encrypter.index_shifts_per_character(string)
+    assert_equal expected, encrypter.encrypt_index_shifts_per_character(string)
   end
 
   def test_index_mapping
@@ -146,7 +146,7 @@ class EncrypterTest < Minitest::Test
 
     encrypter.generate_master_offset
 
-    guide = encrypter.index_shifts_per_character(string)
+    guide = encrypter.encrypt_index_shifts_per_character(string)
 
     assert_equal "keder ohulw!!", encrypter.index_mapping(guide)
   end
