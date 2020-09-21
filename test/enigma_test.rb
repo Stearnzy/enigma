@@ -52,9 +52,11 @@ class EnigmaTest < Minitest::Test
 
     expected_1 = {A: 2, B: 27, C: 71, D: 15}
     assert_equal expected_1, enigma.key_generator
+    assert_equal expected_1, enigma.key_shift
 
     expected_2 = {A: 6, B: 65, C: 59, D: 98}
     assert_equal expected_2, enigma.key_generator("06598")
+    assert_equal expected_2, enigma.key_shift
   end
 
   def test_square_date
@@ -75,4 +77,21 @@ class EnigmaTest < Minitest::Test
     enigma.offset_generator(date)
     assert_equal ({A: 6, B: 4, C: 0, D: 0}), enigma.offset_shift
   end
+
+  def test_generate_master_offset
+    enigma = Enigma.new
+    enigma.stubs(:random_number_generator).returns("02715")
+    date = "040895"
+
+    enigma.key_generator
+    assert_equal ({A: 2, B: 27, C: 71, D: 15}), enigma.key_shift
+
+    enigma.offset_generator(date)
+    assert_equal ({A: 1, B: 0, C: 2, D: 5}), enigma.offset_shift
+
+    enigma.generate_master_offset
+
+    assert_equal ({A: 3, B: 27, C: 73, D: 20}), enigma.master_shift
+  end
+
 end
