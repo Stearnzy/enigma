@@ -219,6 +219,12 @@ class EnigmaTest < Minitest::Test
     key = "02715"
     date = "040895"
 
-    assert_equal "hello world", enigma.decrypt(message, key, date)
+    expected = {
+                decryption: "hello world",
+                key: "02715",
+                date: "040895"
+              }
+
+    assert_equal expected, enigma.decrypt(message, key, date)
   end
 end
