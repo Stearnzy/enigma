@@ -8,4 +8,18 @@ class EnigmaTest < Minitest::Test
     enigma = Enigma.new
     assert_instance_of Enigma, enigma
   end
+
+  def test_readable_alphabet
+    enigma = Enigma.new
+    expected = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
+      "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]
+    assert_equal expected, enigma.alphabet
+  end
+
+  def test_shift_values_start_at_nil
+    enigma = Enigma.new
+    assert_nil enigma.master_shift
+    assert_nil enigma.key_shift
+    assert_nil enigma.offset_shift
+  end
 end
