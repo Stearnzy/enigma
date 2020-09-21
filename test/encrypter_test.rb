@@ -1,5 +1,4 @@
 require "./test/test_helper"
-require "./lib/encrypter"
 
 class EncrypterTest < Minitest::Test
   def test_it_exists
