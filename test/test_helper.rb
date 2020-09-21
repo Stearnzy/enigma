@@ -6,5 +6,3 @@ require "mocha/minitest"
 require "./lib/cryptograph"
 require "./lib/enigma"
 
-require "./lib/decrypter"
-require "./lib/encrypter"
