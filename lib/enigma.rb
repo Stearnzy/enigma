@@ -7,9 +7,6 @@ class Enigma < Cryptograph
   include Dateable
   include Mappable
 
-  def initialize
-  end
-
   def encrypt(string, key = random_number_generator, date = date_conversion)
     key_generator(key)
     offset_generator(date)
