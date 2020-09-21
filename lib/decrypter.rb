@@ -22,12 +22,8 @@ class Decrypter < Cryptograph
 
 # BOTH
   def generate_master_offset
-    shifts_combined = @key_shift.merge(@offset_shift) do |letter, key, off|
+    @master_shift = @key_shift.merge(@offset_shift) do |letter, key, off|
       key + off
-    end
-    @master_shift = shifts_combined.reduce({}) do |collector, (key, count)|
-      collector[key] = count % 27
-      collector
     end
   end
 
