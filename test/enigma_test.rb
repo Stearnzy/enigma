@@ -189,7 +189,7 @@ class EnigmaTest < Minitest::Test
 
     assert_equal expected_1, actual_1
 
-    expected_2 = [7, -23, -70, -16, 14, -1, -59, -13, 17, -16, -51]
+    expected_2 = [7, -23, -70, -16, 14, -1, -59, -13, 17, -16, -51, "!"]
     assert_equal expected_2, enigma.decrypt_index_shifts_per_character(message)
   end
 
