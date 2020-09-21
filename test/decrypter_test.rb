@@ -118,9 +118,9 @@ class DecrypterTest < Minitest::Test
     decrypter.offset_generator(date)
     decrypter.generate_master_offset
 
-    guide = decrypter.index_shifts_per_character(string)
+    guide = decrypter.index_shifts_per_character(message)
 
-    assert_equal "hello world", index_encryption_mapping(guide)
+    assert_equal "hello world", decrypter.index_encryption_mapping(guide)
   end
 
 # Index shifts needs to change to pass. ^^
