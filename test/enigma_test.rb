@@ -22,4 +22,10 @@ class EnigmaTest < Minitest::Test
     assert_nil enigma.key_shift
     assert_nil enigma.offset_shift
   end
+
+  def test_random_number_generator
+    encrypter = Encrypter.new
+    encrypter.stubs(:random_number_generator).returns("02715")
+    assert_equal "02715", encrypter.random_number_generator
+  end
 end
