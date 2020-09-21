@@ -89,4 +89,15 @@ class CryptographTest < Minitest::Test
 
     assert_equal ({A: 3, B: 27, C: 73, D: 20}), cryptograph.master_shift
   end
+
+  def test_split_string
+    cryptograph = Cryptograph.new
+    string_1 = "HeLlO wOrLd"
+    expected_1 = [["h", "e", "l", "l"], ["o", " ", "w", "o"], ["r", "l", "d"]]
+    assert_equal expected_1, cryptograph.split_string(string_1)
+
+    string_2 = "keder ohulw"
+    expected_2 = [["k", "e", "d", "e"], ["r", " ", "o", "h"], ["u", "l", "w"]]
+    assert_equal expected_2, cryptograph.split_string(string_2)
+  end
 end
