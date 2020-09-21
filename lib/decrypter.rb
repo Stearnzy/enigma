@@ -5,8 +5,13 @@ require './lib/dateable'
 class Decrypter < Cryptograph
   include Dateable
 
+# Warning : Might not be permanent here
+  def random_number_generator
+    rand.to_s[2..6]
+  end
+
 # BOTH
-  def key_generator(key)
+  def key_generator(key = random_number_generator)
     placements = [key[0..1], key[1..2], key[2..3], key[3..4]]
     placements.map! {|placement| placement.to_i}
     @key_shift = Hash[@letter_keys.zip(placements)]
@@ -41,14 +46,13 @@ class Decrypter < Cryptograph
 
 # DIFFERENT
   def index_shifts_per_character(string)
-    compiled = match_letter_to_shifts(string).map do |letter_shift|
+    match_letter_to_shifts(string).map do |letter_shift|
       if @alphabet.include?(letter_shift[0])
         @alphabet.index(letter_shift[0]) - letter_shift[1][1]
       else
         letter_shift[0]
       end
     end
-    compiled
   end
 
 # BOTH
