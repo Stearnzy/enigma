@@ -27,5 +27,10 @@ class Enigma < Cryptograph
     match_letter_to_shifts(string)
     guide = decrypt_index_shifts_per_character(string)
     index_mapping(guide)
+    return {
+            decryption: index_mapping(guide),
+            key: key,
+            date: date
+          }
   end
 end
