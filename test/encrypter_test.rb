@@ -135,6 +135,23 @@ class EncrypterTest < Minitest::Test
     assert_equal expected, encrypter.index_shifts_per_character(string)
   end
 
+  def test_index_encryption_mapping
+    encrypter = Encrypter.new
+    string = "Hello World!!"
+
+    encrypter.stubs(:random_number_generator).returns("02715")
+    encrypter.key_generator
+
+    date = "040895"
+    encrypter.offset_generator(date)
+
+    encrypter.generate_master_offset
+
+    guide = encrypter.index_shifts_per_character(string)
+
+    assert_equal "keder ohulw!!", encrypter.index_encryption_mapping(guide)
+  end
+
   def test_encrypt
     encrypter = Encrypter.new
     encrypter.stubs(:random_number_generator).returns("02715")
