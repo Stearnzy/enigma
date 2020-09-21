@@ -133,7 +133,7 @@ class DecrypterTest < Minitest::Test
     assert_equal expected_1, actual_1
 
     expected_2 = [7, -23, -70, -16, 14, -1, -59, -13, 17, -16, -51]
-    assert_equal expected_2, decrypter.index_shifts_per_character(message)
+    assert_equal expected_2, decrypter.decrypt_index_shifts_per_character(message)
   end
 
   def test_index_mapping
@@ -146,7 +146,7 @@ class DecrypterTest < Minitest::Test
     decrypter.offset_generator(date)
     decrypter.generate_master_offset
 
-    guide = decrypter.index_shifts_per_character(message)
+    guide = decrypter.decrypt_index_shifts_per_character(message)
 
     assert_equal "hello world", decrypter.index_mapping(guide)
   end
