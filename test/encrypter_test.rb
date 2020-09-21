@@ -135,7 +135,7 @@ class EncrypterTest < Minitest::Test
     assert_equal expected, encrypter.index_shifts_per_character(string)
   end
 
-  def test_index_encryption_mapping
+  def test_index_mapping
     encrypter = Encrypter.new
     string = "Hello World!!"
 
@@ -149,7 +149,7 @@ class EncrypterTest < Minitest::Test
 
     guide = encrypter.index_shifts_per_character(string)
 
-    assert_equal "keder ohulw!!", encrypter.index_encryption_mapping(guide)
+    assert_equal "keder ohulw!!", encrypter.index_mapping(guide)
   end
 
   def test_encrypt

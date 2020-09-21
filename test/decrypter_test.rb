@@ -108,7 +108,7 @@ class DecrypterTest < Minitest::Test
     assert_equal expected_2, decrypter.index_shifts_per_character(message)
   end
 
-  def test_index_decryption_mapping
+  def test_index_mapping
     decrypter = Decrypter.new
     message = "keder ohulw"
     key = "02715"
@@ -120,7 +120,7 @@ class DecrypterTest < Minitest::Test
 
     guide = decrypter.index_shifts_per_character(message)
 
-    assert_equal "hello world", decrypter.index_decryption_mapping(guide)
+    assert_equal "hello world", decrypter.index_mapping(guide)
   end
 
 # Index shifts needs to change to pass. ^^
