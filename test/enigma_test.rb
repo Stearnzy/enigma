@@ -71,7 +71,7 @@ class EnigmaTest < Minitest::Test
     assert_equal ({A: 1, B: 0, C: 2, D: 5}), enigma.offset_shift
 
     date_2 = "091920"
-    
+
     enigma.offset_generator(date_2)
     assert_equal ({A: 6, B: 4, C: 0, D: 0}), enigma.offset_shift
   end
