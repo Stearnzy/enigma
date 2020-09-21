@@ -1,3 +1,5 @@
+require 'date'
+
 module Dateable
 
   def date_conversion
