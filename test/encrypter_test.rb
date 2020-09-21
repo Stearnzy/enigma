@@ -85,10 +85,9 @@ class EncrypterTest < Minitest::Test
     encrypter.offset_generator(date)
     assert_equal ({A: 1, B: 0, C: 2, D: 5}), encrypter.offset_shift
 
-    expected = {A: 3, B: 27, C: 73, D:20}
-    actual = encrypter.generate_master_offset
+    encrypter.generate_master_offset
 
-    assert_equal expected, actual
+    assert_equal ({A: 3, B: 27, C: 73, D: 20}), encrypter.master_shift
   end
 
   def test_split_string
