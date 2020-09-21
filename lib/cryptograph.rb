@@ -29,4 +29,10 @@ class Cryptograph
     split_last_four.map! {|placement| placement.to_i}
     @offset_shift = Hash[@letter_keys.zip(split_last_four)]
   end
+
+  def generate_master_offset
+    @master_shift = @key_shift.merge(@offset_shift) do |letter, key, off|
+      key + off
+    end
+  end
 end
