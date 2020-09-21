@@ -7,7 +7,7 @@ require './lib/dateable'
 class Encrypter < Cryptograph
   include Dateable
 
-# Only in Encrypter
+# WARNING : INSERTING IN BOTH
   def random_number_generator
     rand.to_s[2..6]
   end
@@ -62,7 +62,7 @@ class Encrypter < Cryptograph
     input.map do |index|
       if index.is_a?(String)
         index
-      elsif index > 27  || index < -27
+      elsif index > 27 || index < -27
         @alphabet[index % 27]
       else
         @alphabet[index]
