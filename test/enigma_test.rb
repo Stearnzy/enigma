@@ -177,7 +177,7 @@ class EnigmaTest < Minitest::Test
 
   def test_decrypt_total_shifts_per_character
     enigma = Enigma.new
-    message = "keder ohulw"
+    message = "keder ohulw!"
     key = "02715"
     date = "040895"
 
@@ -187,7 +187,7 @@ class EnigmaTest < Minitest::Test
 
     expected_1 = [["k", [:A, 3]], ["e", [:B, 27]], ["d", [:C, 73]], ["e", [:D, 20]],
                 ["r", [:A, 3]], [" ", [:B, 27]], ["o", [:C, 73]], ["h", [:D, 20]],
-                ["u", [:A, 3]], ["l", [:B, 27]], ["w", [:C, 73]]]
+                ["u", [:A, 3]], ["l", [:B, 27]], ["w", [:C, 73]], ["!", [:D, 20]]]
     actual_1 = enigma.match_letter_to_shifts(message)
 
     assert_equal expected_1, actual_1
