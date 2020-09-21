@@ -100,4 +100,21 @@ class CryptographTest < Minitest::Test
     expected_2 = [["k", "e", "d", "e"], ["r", " ", "o", "h"], ["u", "l", "w"]]
     assert_equal expected_2, cryptograph.split_string(string_2)
   end
+
+  def test_match_letter_to_shift
+    cryptograph = Cryptograph.new
+    message = "keder ohulw"
+    key = "02715"
+    date = "040895"
+
+    cryptograph.key_generator(key)
+    cryptograph.offset_generator(date)
+    assert_equal ({A: 3, B: 27, C: 73, D:20}), cryptograph.generate_master_offset
+
+    expected = [["k", [:A, 3]], ["e", [:B, 27]], ["d", [:C, 73]], ["e", [:D, 20]],
+                ["r", [:A, 3]], [" ", [:B, 27]], ["o", [:C, 73]], ["h", [:D, 20]],
+                ["u", [:A, 3]], ["l", [:B, 27]], ["w", [:C, 73]]]
+    actual = cryptograph.match_letter_to_shifts(message)
+    assert_equal expected, actual
+  end
 end
