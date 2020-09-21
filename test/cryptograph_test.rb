@@ -13,6 +13,11 @@ class CryptographTest < Minitest::Test
     assert_equal expected, cryptograph.alphabet
   end
 
+  def test_readable_key_letters
+    cryptograph = Cryptograph.new
+    assert_equal [:A, :B, :C, :D], cryptograph.letter_keys
+  end
+
   def test_all_shift_guides_start_nil
     cryptograph = Cryptograph.new
     assert_nil cryptograph.master_shift
@@ -22,25 +27,8 @@ class CryptographTest < Minitest::Test
 
   def test_random_number_generator
     cryptograph = Cryptograph.new
-    cryptograph.stubs(:random_number_generator).returns("02715")
-    assert_equal "02715", cryptograph.random_number_generator
-  end
-
-  def test_random_number_always_returns_5_digits
-    cryptograph = Cryptograph.new
-    pass = 0
-    fail = 0
-    2000.times do
-      s = cryptograph.random_number_generator
-      if s.length == 5
-        pass += 1
-      else
-        fail += 1
-      end
-    end
-
-    assert_equal 0, fail
-    assert_equal 2000, pass
+    assert_instance_of String, cryptograph.random_number_generator
+    assert_equal 5, cryptograph.random_number_generator.length
   end
 
   def test_key_generator
@@ -49,9 +37,11 @@ class CryptographTest < Minitest::Test
 
     expected_1 = {A: 2, B: 27, C: 71, D: 15}
     assert_equal expected_1, cryptograph.key_generator
+    assert_equal expected_1, cryptograph.key_shift
 
     expected_2 = {A: 6, B: 65, C: 59, D: 98}
     assert_equal expected_2, cryptograph.key_generator("06598")
+    assert_equal expected_2, cryptograph.key_shift
   end
 
   def test_square_date
@@ -66,10 +56,12 @@ class CryptographTest < Minitest::Test
     date_1 = "040895"
     expected_1 = {A: 1, B: 0, C: 2, D: 5}
     assert_equal expected_1, cryptograph.offset_generator(date_1)
+    assert_equal expected_1, cryptograph.offset_shift
 
     date_2 = "091920"
     expected_2 = {A: 6, B: 4, C: 0, D: 0}
     assert_equal expected_2, cryptograph.offset_generator(date_2)
+    assert_equal expected_2, cryptograph.offset_shift
   end
 
   def test_generate_master_offset
@@ -107,7 +99,8 @@ class CryptographTest < Minitest::Test
 
     cryptograph.key_generator(key)
     cryptograph.offset_generator(date)
-    assert_equal ({A: 3, B: 27, C: 73, D:20}), cryptograph.generate_master_offset
+    cryptograph.generate_master_offset
+    assert_equal ({A: 3, B: 27, C: 73, D:20}), cryptograph.master_shift
 
     expected = [["k", [:A, 3]], ["e", [:B, 27]], ["d", [:C, 73]], ["e", [:D, 20]],
                 ["r", [:A, 3]], [" ", [:B, 27]], ["o", [:C, 73]], ["h", [:D, 20]],
