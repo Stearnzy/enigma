@@ -79,7 +79,7 @@ class CryptographTest < Minitest::Test
     key = "02715"
     date = "040895"
 
-    cryptograph.key_generator
+    cryptograph.key_generator(key)
     assert_equal ({A: 2, B: 27, C: 71, D: 15}), cryptograph.key_shift
 
     cryptograph.offset_generator(date)
