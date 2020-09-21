@@ -34,12 +34,9 @@ class EnigmaTest < Minitest::Test
       s = engima.random_number_generator
       if s.length == 5
         pass += 1
-      else
-        fail += 1
       end
     end
 
-    assert_equal 0, fail
     assert_equal 2000, pass
   end
 
