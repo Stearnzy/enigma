@@ -63,4 +63,16 @@ class EnigmaTest < Minitest::Test
 
     assert_equal "8449286400", enigma.square_date("091920")
   end
+
+  def test_offset_generator
+    enigma = Enigma.new
+    date = "040895"
+
+    enigma.offset_generator(date)
+    assert_equal ({A: 1, B: 0, C: 2, D: 5}), enigma.offset_shift
+
+    date = "091920"
+    enigma.offset_generator(date)
+    assert_equal ({A: 6, B: 4, C: 0, D: 0}), enigma.offset_shift
+  end
 end
