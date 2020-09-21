@@ -8,4 +8,8 @@ class Cryptograph
     @key_shift = nil
     @offset_shift = nil
   end
+
+  def random_number_generator
+    rand.to_s[2..6]
+  end
 end
