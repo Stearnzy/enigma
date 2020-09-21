@@ -73,4 +73,20 @@ class CryptographTest < Minitest::Test
     date_2 = "091920"
     expected_2 = {A: 6, B: 4, C: 0, D: 0}
   end
+
+  def test_generate_master_offset
+    cryptograph = Cryptograph.new
+    key = "02715"
+    date = "040895"
+
+    cryptograph.key_generator
+    assert_equal ({A: 2, B: 27, C: 71, D: 15}), cryptograph.key_shift
+
+    cryptograph.offset_generator(date)
+    assert_equal ({A: 1, B: 0, C: 2, D: 5}), cryptograph.offset_shift
+
+    cryptograph.generate_master_offset
+
+    assert_equal ({A: 3, B: 27, C: 73, D: 20}), cryptograph.master_shift
+  end
 end
