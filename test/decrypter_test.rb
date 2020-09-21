@@ -123,9 +123,7 @@ class DecrypterTest < Minitest::Test
     assert_equal "hello world", decrypter.index_mapping(guide)
   end
 
-# Index shifts needs to change to pass. ^^
   def test_decrypt
-    skip
     decrypter = Decrypter.new
     message = "keder ohulw"
     key = "02715"
