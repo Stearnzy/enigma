@@ -51,7 +51,8 @@ class Decrypter < Cryptograph
     compiled
   end
 
-  def index_decryption_mapping(input)
+# BOTH
+  def index_mapping(input)
     input.map do |index|
       if index.is_a?(String)
         index
