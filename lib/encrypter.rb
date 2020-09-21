@@ -57,12 +57,12 @@ class Encrypter < Cryptograph
     end
   end
 
-# ?????
-  def index_encryption_mapping(input)
+# BOTH
+  def index_mapping(input)
     input.map do |index|
       if index.is_a?(String)
         index
-      elsif index > 27
+      elsif index > 27  || index < -27
         @alphabet[index % 27]
       else
         @alphabet[index]
@@ -76,6 +76,6 @@ class Encrypter < Cryptograph
     generate_master_offset
     match_letter_to_shifts(string)
     guide = index_shifts_per_character(string)
-    index_encryption_mapping(guide)
+    index_mapping(guide)
   end
 end
