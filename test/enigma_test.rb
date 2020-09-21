@@ -206,4 +206,13 @@ class EnigmaTest < Minitest::Test
 
     assert_equal "hello world", enigma.index_mapping(guide)
   end
+
+  def test_decrypt
+    enigma = Enigma.new
+    message = "keder ohulw"
+    key = "02715"
+    date = "040895"
+
+    assert_equal "hello world", enigma.decrypt(message, key, date)
+  end
 end
