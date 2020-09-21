@@ -143,4 +143,21 @@ class EnigmaTest < Minitest::Test
     expected = [10, 31, 84, 31, 17, 53, 95, 34, 20, 38, 76, "!", "!"]
     assert_equal expected, enigma.encrypt_index_shifts_per_character(string)
   end
+
+  def test_encrypt_index_mapping
+    enigma = Enigma.new
+    string = "Hello World!!"
+
+    enigma.stubs(:random_number_generator).returns("02715")
+    enigma.key_generator
+
+    date = "040895"
+    enigma.offset_generator(date)
+
+    enigma.generate_master_offset
+
+    guide = enigma.encrypt_index_shifts_per_character(string)
+
+    assert_equal "keder ohulw!!", enigma.index_mapping(guide)
+  end
 end
