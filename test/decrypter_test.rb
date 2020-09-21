@@ -59,7 +59,7 @@ class DecrypterTest < Minitest::Test
 
     decrypter.generate_master_offset
 
-    assert_equal ({:A=>3, :B=>0, :C=>19, :D=>20}), decrypter.master_shift
+    assert_equal ({A: 3, B: 27, C: 73, D: 20}), decrypter.master_shift
   end
 
   def test_split_string
@@ -81,9 +81,9 @@ class DecrypterTest < Minitest::Test
     decrypter.offset_generator(date)
     assert_equal ({:A=>3, :B=>0, :C=>19, :D=>20}), decrypter.generate_master_offset
 
-    expected = [["k", [:A, 3]], ["e", [:B, 0]], ["d", [:C, 19]], ["e", [:D, 20]],
-                ["r", [:A, 3]], [" ", [:B, 0]], ["o", [:C, 19]], ["h", [:D, 20]],
-                ["u", [:A, 3]], ["l", [:B, 0]], ["w", [:C, 19]]]
+    expected = [["k", [:A, 3]], ["e", [:B, 27]], ["d", [:C, 73]], ["e", [:D, 20]],
+                ["r", [:A, 3]], [" ", [:B, 27]], ["o", [:C, 73]], ["h", [:D, 20]],
+                ["u", [:A, 3]], ["l", [:B, 27]], ["w", [:C, 73]]]
     actual = decrypter.match_letter_to_shifts(message)
     assert_equal expected, actual
   end
@@ -99,9 +99,9 @@ class DecrypterTest < Minitest::Test
     decrypter.offset_generator(date)
     decrypter.generate_master_offset
 
-    expected_1 = [["k", [:A, 3]], ["e", [:B, 0]], ["d", [:C, 19]], ["e", [:D, 20]],
-                ["r", [:A, 3]], [" ", [:B, 0]], ["o", [:C, 19]], ["h", [:D, 20]],
-                ["u", [:A, 3]], ["l", [:B, 0]], ["w", [:C, 19]]]
+    expected_1 = [["k", [:A, 3]], ["e", [:B, 27]], ["d", [:C, 73]], ["e", [:D, 20]],
+                ["r", [:A, 3]], [" ", [:B, 27]], ["o", [:C, 73]], ["h", [:D, 20]],
+                ["u", [:A, 3]], ["l", [:B, 27]], ["w", [:C, 73]]]
     actual_1 = decrypter.match_letter_to_shifts(message)
 
     assert_equal expected_1, actual_1
