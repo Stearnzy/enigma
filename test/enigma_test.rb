@@ -13,6 +13,11 @@ class EnigmaTest < Minitest::Test
     assert_equal expected, enigma.alphabet
   end
 
+  def test_readable_key_letters
+    enigma = Enigma.new
+    assert_equal [:A, :B, :C, :D], enigma.letter_keys
+  end
+
   def test_shift_values_start_at_nil
     enigma = Enigma.new
     assert_nil enigma.master_shift
@@ -22,22 +27,8 @@ class EnigmaTest < Minitest::Test
 
   def test_random_number_generator
     enigma = Enigma.new
-    enigma.stubs(:random_number_generator).returns("02715")
-    assert_equal "02715", enigma.random_number_generator
-  end
-
-  def test_random_number_always_returns_5_digits
-    engima = Enigma.new
-    pass = 0
-    fail = 0
-    2000.times do
-      s = engima.random_number_generator
-      if s.length == 5
-        pass += 1
-      end
-    end
-
-    assert_equal 2000, pass
+    assert_instance_of String, enigma.random_number_generator
+    assert_equal 5, enigma.random_number_generator.length
   end
 
   def test_key_generator
@@ -55,7 +46,7 @@ class EnigmaTest < Minitest::Test
 
   def test_date_conversion_returns_six_digit_string
     enigma = Enigma.new
-    
+
     assert_instance_of String, enigma.date_conversion
     assert_equal 6, enigma.date_conversion.length
   end
@@ -73,6 +64,7 @@ class EnigmaTest < Minitest::Test
 
     enigma.offset_generator(date_1)
     assert_equal ({A: 1, B: 0, C: 2, D: 5}), enigma.offset_shift
+
 
     date_2 = "091920"
 

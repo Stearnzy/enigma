@@ -44,6 +44,14 @@ class CryptographTest < Minitest::Test
     assert_equal expected_2, cryptograph.key_shift
   end
 
+  def test_date_conversion_returns_six_digit_string
+    cryptograph = Cryptograph.new
+
+    assert_instance_of String, cryptograph.date_conversion
+    assert_equal 6, cryptograph.date_conversion.length
+  end
+
+
   def test_square_date
     cryptograph = Cryptograph.new
     assert_equal "1672401025", cryptograph.square_date("040895")
