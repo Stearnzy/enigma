@@ -166,7 +166,13 @@ class EnigmaTest < Minitest::Test
     enigma.stubs(:random_number_generator).returns("02715")
     enigma.stubs(:date_conversion).returns("040895")
 
-    assert_equal "keder ohulw!!", enigma.encrypt("Hello World!!")
+    expected = {
+              encryption: "keder ohulw!!",
+              key: "02715",
+              date: "040895"
+            }
+
+    assert_equal expected, enigma.encrypt("Hello World!!")
   end
 
   # ---- Decryption Tests ----
