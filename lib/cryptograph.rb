@@ -4,7 +4,7 @@ require './lib/dateable'
 class Cryptograph
   include Dateable
 
-  attr_reader :alphabet, :master_shift, :key_shift, :offset_shift
+  attr_reader :letter_keys, :alphabet, :master_shift, :key_shift, :offset_shift
 
   def initialize
     @letter_keys = [:A, :B, :C, :D]

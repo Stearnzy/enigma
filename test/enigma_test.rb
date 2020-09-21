@@ -13,6 +13,11 @@ class EnigmaTest < Minitest::Test
     assert_equal expected, enigma.alphabet
   end
 
+  def test_readable_key_letters
+    enigma = Enigma.new
+    assert_equal [:A, :B, :C, :D], enigma.letter_keys
+  end
+
   def test_shift_values_start_at_nil
     enigma = Enigma.new
     assert_nil enigma.master_shift
@@ -22,25 +27,8 @@ class EnigmaTest < Minitest::Test
 
   def test_random_number_generator
     enigma = Enigma.new
-    enigma.stubs(:random_number_generator).returns("02715")
-    assert_equal "02715", enigma.random_number_generator
-  end
-
-  def test_random_number_always_returns_5_digits
-    engima = Enigma.new
-    pass = 0
-    fail = 0
-    2000.times do
-      s = engima.random_number_generator
-      if s.length == 5
-        pass += 1
-      else
-        fail += 1
-      end
-    end
-
-    assert_equal 0, fail
-    assert_equal 2000, pass
+    assert_instance_of String, enigma.random_number_generator
+    assert_equal 5, enigma.random_number_generator.length
   end
 
   def test_key_generator
@@ -56,6 +44,13 @@ class EnigmaTest < Minitest::Test
     assert_equal expected_2, enigma.key_shift
   end
 
+  def test_date_conversion_returns_six_digit_string
+    enigma = Enigma.new
+
+    assert_instance_of String, enigma.date_conversion
+    assert_equal 6, enigma.date_conversion.length
+  end
+
   def test_square_date
     enigma = Enigma.new
     assert_equal "1672401025", enigma.square_date("040895")
@@ -69,6 +64,7 @@ class EnigmaTest < Minitest::Test
 
     enigma.offset_generator(date_1)
     assert_equal ({A: 1, B: 0, C: 2, D: 5}), enigma.offset_shift
+
 
     date_2 = "091920"
 
@@ -177,7 +173,7 @@ class EnigmaTest < Minitest::Test
 
   def test_decrypt_total_shifts_per_character
     enigma = Enigma.new
-    message = "keder ohulw"
+    message = "keder ohulw!"
     key = "02715"
     date = "040895"
 
@@ -187,12 +183,12 @@ class EnigmaTest < Minitest::Test
 
     expected_1 = [["k", [:A, 3]], ["e", [:B, 27]], ["d", [:C, 73]], ["e", [:D, 20]],
                 ["r", [:A, 3]], [" ", [:B, 27]], ["o", [:C, 73]], ["h", [:D, 20]],
-                ["u", [:A, 3]], ["l", [:B, 27]], ["w", [:C, 73]]]
+                ["u", [:A, 3]], ["l", [:B, 27]], ["w", [:C, 73]], ["!", [:D, 20]]]
     actual_1 = enigma.match_letter_to_shifts(message)
 
     assert_equal expected_1, actual_1
 
-    expected_2 = [7, -23, -70, -16, 14, -1, -59, -13, 17, -16, -51]
+    expected_2 = [7, -23, -70, -16, 14, -1, -59, -13, 17, -16, -51, "!"]
     assert_equal expected_2, enigma.decrypt_index_shifts_per_character(message)
   end
 
