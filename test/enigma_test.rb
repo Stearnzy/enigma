@@ -53,6 +53,13 @@ class EnigmaTest < Minitest::Test
     assert_equal expected_2, enigma.key_shift
   end
 
+  def test_date_conversion_returns_six_digit_string
+    enigma = Enigma.new
+    
+    assert_instance_of String, enigma.date_conversion
+    assert_equal 6, enigma.date_conversion.length
+  end
+
   def test_square_date
     enigma = Enigma.new
     assert_equal "1672401025", enigma.square_date("040895")
