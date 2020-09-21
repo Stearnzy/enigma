@@ -35,4 +35,8 @@ class Cryptograph
       key + off
     end
   end
+
+  def split_string(string)
+    string.downcase.split("").each_slice(4).to_a
+  end
 end
