@@ -160,4 +160,12 @@ class EnigmaTest < Minitest::Test
 
     assert_equal "keder ohulw!!", enigma.index_mapping(guide)
   end
+
+  def test_encrypt
+    enigma = Enigma.new
+    enigma.stubs(:random_number_generator).returns("02715")
+    enigma.stubs(:date_conversion).returns("040895")
+
+    assert_equal "keder ohulw!!", enigma.encrypt("Hello World!!")
+  end
 end
