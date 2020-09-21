@@ -24,8 +24,8 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_random_number_generator
-    encrypter = Encrypter.new
-    encrypter.stubs(:random_number_generator).returns("02715")
-    assert_equal "02715", encrypter.random_number_generator
+    enigma = Enigma.new
+    enigma.stubs(:random_number_generator).returns("02715")
+    assert_equal "02715", enigma.random_number_generator
   end
 end
