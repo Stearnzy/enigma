@@ -13,7 +13,11 @@ class Enigma < Cryptograph
     generate_master_offset
     match_letter_to_shifts(string)
     guide = encrypt_index_shifts_per_character(string)
-    index_mapping(guide)
+    return {
+            encryption: index_mapping(guide),
+            key: key,
+            date: date
+          }
   end
 
   def decrypt(string, key, date)
