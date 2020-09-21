@@ -63,4 +63,14 @@ class CryptographTest < Minitest::Test
 
     assert_equal "8449286400", cryptograph.square_date("091920")
   end
+
+  def test_offset_generator
+    cryptograph = Cryptograph.new
+    date_1 = "040895"
+    expected_1 = {A: 1, B: 0, C: 2, D: 5}
+    assert_equal expected_1, cryptograph.offset_generator(date_1)
+
+    date_2 = "091920"
+    expected_2 = {A: 6, B: 4, C: 0, D: 0}
+  end
 end
