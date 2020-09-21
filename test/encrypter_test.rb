@@ -85,10 +85,9 @@ class EncrypterTest < Minitest::Test
     encrypter.offset_generator(date)
     assert_equal ({A: 1, B: 0, C: 2, D: 5}), encrypter.offset_shift
 
-    expected = {A: 3, B: 27, C: 73, D:20}
-    actual = encrypter.generate_master_offset
+    encrypter.generate_master_offset
 
-    assert_equal expected, actual
+    assert_equal ({A: 3, B: 27, C: 73, D: 20}), encrypter.master_shift
   end
 
   def test_split_string
@@ -132,7 +131,7 @@ class EncrypterTest < Minitest::Test
     encrypter.generate_master_offset
 
     expected = [10, 31, 84, 31, 17, 53, 95, 34, 20, 38, 76, "!", "!"]
-    assert_equal expected, encrypter.index_shifts_per_character(string)
+    assert_equal expected, encrypter.encrypt_index_shifts_per_character(string)
   end
 
   def test_index_mapping
@@ -147,7 +146,7 @@ class EncrypterTest < Minitest::Test
 
     encrypter.generate_master_offset
 
-    guide = encrypter.index_shifts_per_character(string)
+    guide = encrypter.encrypt_index_shifts_per_character(string)
 
     assert_equal "keder ohulw!!", encrypter.index_mapping(guide)
   end

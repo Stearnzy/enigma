@@ -23,6 +23,34 @@ class DecrypterTest < Minitest::Test
     assert_nil decrypter.offset_shift
   end
 
+# ---- CAN THESE BE DELETED AND STILL PAST TESTS EVEN WHEN INHERITING
+# ---- THIS AND NOT USING IT??
+
+  def test_random_number_generator
+    decrypter = Decrypter.new
+    decrypter.stubs(:random_number_generator).returns("02715")
+    assert_equal "02715", decrypter.random_number_generator
+  end
+
+  def test_random_number_always_returns_5_digits
+    decrypter = Decrypter.new
+    pass = 0
+    fail = 0
+    2000.times do
+      s = decrypter.random_number_generator
+      if s.length == 5
+        pass += 1
+      else
+        fail += 1
+      end
+    end
+
+    assert_equal 0, fail
+    assert_equal 2000, pass
+  end
+
+  # -----------
+
   def test_key_generator
     decrypter = Decrypter.new
     key = ("02715")
@@ -105,7 +133,7 @@ class DecrypterTest < Minitest::Test
     assert_equal expected_1, actual_1
 
     expected_2 = [7, -23, -70, -16, 14, -1, -59, -13, 17, -16, -51]
-    assert_equal expected_2, decrypter.index_shifts_per_character(message)
+    assert_equal expected_2, decrypter.decrypt_index_shifts_per_character(message)
   end
 
   def test_index_mapping
@@ -118,7 +146,7 @@ class DecrypterTest < Minitest::Test
     decrypter.offset_generator(date)
     decrypter.generate_master_offset
 
-    guide = decrypter.index_shifts_per_character(message)
+    guide = decrypter.decrypt_index_shifts_per_character(message)
 
     assert_equal "hello world", decrypter.index_mapping(guide)
   end
