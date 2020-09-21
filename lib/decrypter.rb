@@ -64,22 +64,13 @@ class Decrypter < Cryptograph
     end.join
   end
 
-
-# Args setup correctly, I think!
-# Key MUST be called for the DECRYPT method?
-  def decrypt(string, key, date = date_conversion)
-    encryption_keys = key_set_generator(key)
-    offset_keys = offset_generator(date)
-    master_shift_count(encryption_keys, offset_keys)
+# ONLY difference is METHOD NAME
+  def decrypt(string, key, date)
+    key_generator(key)
+    offset_generator(date)
+    generate_master_offset
     match_letter_to_shifts(string)
-    index_shifts_per_character(string).map do |index|
-      if index.is_a?(String)
-        index
-      elsif index > 27
-        @alphabet[index % 27]
-      else
-        @alphabet[index]
-      end
-    end.join
+    guide = index_shifts_per_character(string)
+    index_mapping(guide)
   end
 end
