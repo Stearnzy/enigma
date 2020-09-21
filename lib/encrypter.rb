@@ -70,6 +70,7 @@ class Encrypter < Cryptograph
     end.join
   end
 
+  # ONLY difference is METHOD NAME
   def encrypt(string, key = random_number_generator, date = date_conversion)
     key_generator(key)
     offset_generator(date)
