@@ -125,4 +125,22 @@ class EnigmaTest < Minitest::Test
                 ["!", [:A, 3]]]
     assert_equal expected_2, enigma.match_letter_to_shifts(string)
   end
+
+  # --- Encryption Tests ----
+
+  def test_encrypt_total_shifts_per_character
+    enigma = Enigma.new
+    string = "Hello World!!"
+
+    enigma.stubs(:random_number_generator).returns("02715")
+    enigma.key_generator
+
+    date = "040895"
+    enigma.offset_generator(date)
+
+    enigma.generate_master_offset
+
+    expected = [10, 31, 84, 31, 17, 53, 95, 34, 20, 38, 76, "!", "!"]
+    assert_equal expected, enigma.encrypt_index_shifts_per_character(string)
+  end
 end
