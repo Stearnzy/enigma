@@ -104,9 +104,23 @@ class DecrypterTest < Minitest::Test
 
     assert_equal expected_1, actual_1
 
-# Be cautious, this is the result needed
     expected_2 = [7, -23, -70, -16, 14, -1, -59, -13, 17, -16, -51]
     assert_equal expected_2, decrypter.index_shifts_per_character(message)
+  end
+
+  def test_index_encryption_mapping
+    decrypter = Decrypter.new
+    message = "keder ohulw"
+    key = "02715"
+    date = "040895"
+
+    decrypter.key_generator(key)
+    decrypter.offset_generator(date)
+    decrypter.generate_master_offset
+
+    guide = decrypter.index_shifts_per_character(string)
+
+    assert_equal "hello world", index_encryption_mapping(guide)
   end
 
 # Index shifts needs to change to pass. ^^
