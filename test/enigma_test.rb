@@ -191,4 +191,19 @@ class EnigmaTest < Minitest::Test
     expected_2 = [7, -23, -70, -16, 14, -1, -59, -13, 17, -16, -51]
     assert_equal expected_2, enigma.decrypt_index_shifts_per_character(message)
   end
+
+  def test_decrypt_index_mapping
+    enigma = Enigma.new
+    message = "keder ohulw"
+    key = "02715"
+    date = "040895"
+
+    enigma.key_generator(key)
+    enigma.offset_generator(date)
+    enigma.generate_master_offset
+
+    guide = enigma.decrypt_index_shifts_per_character(message)
+
+    assert_equal "hello world", enigma.index_mapping(guide)
+  end
 end
