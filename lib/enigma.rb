@@ -20,7 +20,7 @@ class Enigma < Cryptograph
           }
   end
 
-  def decrypt(string, key, date)
+  def decrypt(string, key, date = date_conversion)
     key_generator(key)
     offset_generator(date)
     generate_master_offset
