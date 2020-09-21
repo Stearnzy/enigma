@@ -27,17 +27,17 @@ class DecrypterTest < Minitest::Test
 # ---- THIS AND NOT USING IT??
 
   def test_random_number_generator
-    encrypter = Encrypter.new
-    encrypter.stubs(:random_number_generator).returns("02715")
-    assert_equal "02715", encrypter.random_number_generator
+    decrypter = Decrypter.new
+    decrypter.stubs(:random_number_generator).returns("02715")
+    assert_equal "02715", decrypter.random_number_generator
   end
 
   def test_random_number_always_returns_5_digits
-    encrypter = Encrypter.new
+    decrypter = Decrypter.new
     pass = 0
     fail = 0
     2000.times do
-      s = encrypter.random_number_generator
+      s = decrypter.random_number_generator
       if s.length == 5
         pass += 1
       else
