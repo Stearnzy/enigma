@@ -56,4 +56,11 @@ class CryptographTest < Minitest::Test
     expected_2 = {A: 6, B: 65, C: 59, D: 98}
     assert_equal expected_2, cryptograph.key_generator("06598")
   end
+
+  def test_square_date
+    cryptograph = Cryptograph.new
+    assert_equal "1672401025", cryptograph.square_date("040895")
+
+    assert_equal "8449286400", cryptograph.square_date("091920")
+  end
 end
