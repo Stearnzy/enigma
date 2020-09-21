@@ -1,11 +1,13 @@
 require 'date'
 require './lib/cryptograph'
 require './lib/dateable'
+require './lib/mappable'
 
 # May be able to remove require date..?
 # Still need to give it output method, hash of encryption, key, date
 class Encrypter < Cryptograph
   include Dateable
+  include Mappable
 
 # WARNING : INSERTING IN BOTH
   def random_number_generator
@@ -58,17 +60,17 @@ class Encrypter < Cryptograph
   end
 
 # BOTH
-  def index_mapping(input)
-    input.map do |index|
-      if index.is_a?(String)
-        index
-      elsif index > 27 || index < -27
-        @alphabet[index % 27]
-      else
-        @alphabet[index]
-      end
-    end.join
-  end
+  # def index_mapping(input)
+  #   input.map do |index|
+  #     if index.is_a?(String)
+  #       index
+  #     elsif index > 27 || index < -27
+  #       @alphabet[index % 27]
+  #     else
+  #       @alphabet[index]
+  #     end
+  #   end.join
+  # end
 
   # ONLY difference is METHOD NAME
   def encrypt(string, key = random_number_generator, date = date_conversion)
