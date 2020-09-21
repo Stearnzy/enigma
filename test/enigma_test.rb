@@ -94,4 +94,15 @@ class EnigmaTest < Minitest::Test
     assert_equal ({A: 3, B: 27, C: 73, D: 20}), enigma.master_shift
   end
 
+  def test_split_string
+    enigma = Enigma.new
+    string_1 = "HeLlO wOrLd"
+    expected_1 = [["h", "e", "l", "l"], ["o", " ", "w", "o"], ["r", "l", "d"]]
+    assert_equal expected_1, enigma.split_string(string_1)
+
+    string_2 = "keder ohulw"
+    expected_2 = [["k", "e", "d", "e"], ["r", " ", "o", "h"], ["u", "l", "w"]]
+    assert_equal expected_2, enigma.split_string(string_2)
+  end
+
 end
