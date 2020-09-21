@@ -11,26 +11,26 @@ module Mappable
       end
     end.join
   end
-  #
-  # def encrypt_index_shifts_per_character(string)
-  #   match_letter_to_shifts(string).map do |letter_shift|
-  #     if @alphabet.include?(letter_shift[0])
-  #       @alphabet.index(letter_shift[0]) + letter_shift[1][1]
-  #     else
-  #       letter_shift[0]
-  #     end
-  #   end
-  # end
-  #
-  # def decrypt_index_shifts_per_character(string)
-  #   match_letter_to_shifts(string).map do |letter_shift|
-  #     if @alphabet.include?(letter_shift[0])
-  #       @alphabet.index(letter_shift[0]) - letter_shift[1][1]
-  #     else
-  #       letter_shift[0]
-  #     end
-  #   end
-  # end
+
+  def encrypt_index_shifts_per_character(string)
+    match_letter_to_shifts(string).map do |letter_shift|
+      if @alphabet.include?(letter_shift[0])
+        @alphabet.index(letter_shift[0]) + letter_shift[1][1]
+      else
+        letter_shift[0]
+      end
+    end
+  end
+
+  def decrypt_index_shifts_per_character(string)
+    match_letter_to_shifts(string).map do |letter_shift|
+      if @alphabet.include?(letter_shift[0])
+        @alphabet.index(letter_shift[0]) - letter_shift[1][1]
+      else
+        letter_shift[0]
+      end
+    end
+  end
   #
   # def encrypt(string, key = random_number_generator, date = date_conversion)
   #   key_generator(key)
