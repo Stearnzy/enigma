@@ -1,7 +1,4 @@
-require "minitest/autorun"
-require "minitest/pride"
-require "mocha/minitest"
-require "./lib/enigma"
+require "./test/test_helper"
 
 class EnigmaTest < Minitest::Test
   def test_it_exists
@@ -68,13 +65,14 @@ class EnigmaTest < Minitest::Test
 
   def test_offset_generator
     enigma = Enigma.new
-    date = "040895"
+    date_1 = "040895"
 
-    enigma.offset_generator(date)
+    enigma.offset_generator(date_1)
     assert_equal ({A: 1, B: 0, C: 2, D: 5}), enigma.offset_shift
 
-    date = "091920"
-    enigma.offset_generator(date)
+    date_2 = "091920"
+
+    enigma.offset_generator(date_2)
     assert_equal ({A: 6, B: 4, C: 0, D: 0}), enigma.offset_shift
   end
 

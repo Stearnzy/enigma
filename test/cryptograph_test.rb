@@ -1,7 +1,4 @@
-require "minitest/autorun"
-require "minitest/pride"
-require "mocha/minitest"
-require "./lib/cryptograph"
+require "./test/test_helper"
 
 class CryptographTest < Minitest::Test
   def test_it_exists
@@ -72,6 +69,7 @@ class CryptographTest < Minitest::Test
 
     date_2 = "091920"
     expected_2 = {A: 6, B: 4, C: 0, D: 0}
+    assert_equal expected_2, cryptograph.offset_generator(date_2)
   end
 
   def test_generate_master_offset

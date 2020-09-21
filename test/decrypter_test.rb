@@ -1,7 +1,4 @@
-require "minitest/autorun"
-require "minitest/pride"
-require "mocha/minitest"
-require "./lib/decrypter"
+require "./test/test_helper"
 
 class DecrypterTest < Minitest::Test
   def test_it_exists
