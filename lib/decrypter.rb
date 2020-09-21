@@ -1,9 +1,11 @@
 require 'date'
 require './lib/cryptograph'
 require './lib/dateable'
+require './lib/mappable'
 
 class Decrypter < Cryptograph
   include Dateable
+  include Mappable
 
 # Warning : Might not be permanent here
   def random_number_generator
@@ -56,17 +58,17 @@ class Decrypter < Cryptograph
   end
 
 # BOTH
-  def index_mapping(input)
-    input.map do |index|
-      if index.is_a?(String)
-        index
-      elsif index > 27 || index < -27
-        @alphabet[index % 27]
-      else
-        @alphabet[index]
-      end
-    end.join
-  end
+  # def index_mapping(input)
+  #   input.map do |index|
+  #     if index.is_a?(String)
+  #       index
+  #     elsif index > 27 || index < -27
+  #       @alphabet[index % 27]
+  #     else
+  #       @alphabet[index]
+  #     end
+  #   end.join
+  # end
 
 # ONLY difference is METHOD NAME
   def decrypt(string, key, date)
