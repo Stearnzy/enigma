@@ -23,4 +23,10 @@ class Cryptograph
     @key_shift = Hash[@letter_keys.zip(placements)]
   end
 
+  def offset_generator(date)
+    last_four_date_squared = square_date(date)[-4..-1]
+    split_last_four = (last_four_date_squared.split(""))
+    split_last_four.map! {|placement| placement.to_i}
+    @offset_shift = Hash[@letter_keys.zip(split_last_four)]
+  end
 end
