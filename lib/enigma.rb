@@ -22,7 +22,7 @@ class Enigma < Cryptograph
 
   def decrypt(string, key, date = date_conversion)
     key_generator(key)
-    offset_generator(date)
+    offset_generator(date = date_conversion)
     generate_master_offset
     match_letter_to_shifts(string)
     guide = decrypt_index_shifts_per_character(string)
