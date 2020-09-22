@@ -4,7 +4,7 @@ module Mappable
     input.map do |index|
       if index.is_a?(String)
         index
-      elsif index > 27 || index < -27
+      elsif index >= 27 || index <= -27
         @alphabet[index % 27]
       else
         @alphabet[index]
