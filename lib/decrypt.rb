@@ -6,7 +6,7 @@ handle = File.open(ARGV[0], "r")
 encrypted_message = handle.read
 handle.close
 
-decrypted_info = enigma.decrypt(encrypted_message, ARGV[2], ARGV[3])
+decrypted_info = enigma.decrypt(encrypted_message, ARGV[2], ARGV[3] = enigma.date_conversion)
 
 writer = File.open(ARGV[1], "w")
 writer.write(decrypted_info[:decryption])
