@@ -12,4 +12,4 @@ writer = File.open(ARGV[1], "w")
 writer.write(decrypted_info[:decryption])
 writer.close
 
-p "Created '#{ARGV[1]}' with the key #{ARGV[2]} and date #{ARGV[3]}"
+p "Created '#{ARGV[1]}' with the key #{ARGV[2]} and date #{ARGV[3] = enigma.date_conversion}"
